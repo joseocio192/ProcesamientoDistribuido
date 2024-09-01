@@ -201,156 +201,26 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
             return;
         }
 
-        // if (evt.getSource() == btnGuardar) {
-        // if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("tipos")) {
-        // if (txtTipNombre.getText().equals("") || txtTipid.getText().equals("")) {
-        // Notifications.getInstance().show(Notifications.Type.INFO,
-        // Notifications.Location.TOP_CENTER,
-        // "Inserte datos en los campos");
-        // return;
-        // }
-        // try {
-        // Integer.parseInt(txtTipid.getText());
-        // } catch (NumberFormatException e) {
-        // ErrorHandler.showNotification("Error: El TipId no es un número válido.");
-        // System.out.println("Error: El TipId no es un número válido.");
-        // return;
-        // }
-        // insertarTablaTip();
-        // btnGuardar.setEnabled(false);
-        // return;
-        // }
-        // //
-        // if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("clientes")) {
-        // if (txtClienteNombre.getText().equals("") ||
-        // txtClienteApellidos.getText().equals("")
-        // || txtClienteLimiteCredito.getText().equals("")) {
-        // Notifications.getInstance().show(Notifications.Type.INFO,
-        // Notifications.Location.TOP_CENTER,
-        // "Inserte datos en los Campos Vacios");
-        // return;
-        // }
-        // try {
-        // Float.parseFloat(txtClienteLimiteCredito.getText());
-        // } catch (NumberFormatException e) {
-        // ErrorHandler.showNotification("Error: El ClienteLimiteCredito no es un número
-        // válido.");
-        // System.out.println("Error: El ClienteLimiteCredito no es un número válido.");
-        // return;
-        // }
-        // if (!txtClienteId.getText().equals("*")) {
-        // try {
-        // Integer.parseInt(txtClienteId.getText());
-        // } catch (NumberFormatException e) {
-        // ErrorHandler.showNotification("Error: El ClienteId no es un número válido.");
-        // System.out.println("Error: El ClienteId no es un número válido.");
-        // return;
-        // }
-        // }
-        // if (!txtClienteSexo.getText().equalsIgnoreCase("M")
-        // && !txtClienteSexo.getText().equalsIgnoreCase("F")) {
-        // ErrorHandler.showNotification("Error: El ClienteSexo debe ser 'M' o 'F'.");
-        // return;
-        // }
-        // insertarTablaCliente();
-        // return;
-        // }
-        // return;
-        // }
-        // if (evt.getSource() == rdModificar) {
-        // btnLimpiar.setEnabled(true);
-        // btnGuardar.setEnabled(true);
+        if (evt.getSource() == btnGuardar) {
+            return;
+        }
 
-        // if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("tipos")) {
-        // txtTipNombre.setEnabled(true);
+        if (evt.getSource() == rdModificar) {
+        }
+        if (evt.getSource() == rdNuevo) {
 
-        // txtTipid.setText("");
-        // txtTipid.setEditable(true);
-        // return;
-        // }
-        // if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("clientes")) {
-        // txtClienteNombre.setEnabled(true);
-        // txtClienteApellidos.setEnabled(true);
-        // txtClienteLimiteCredito.setEnabled(true);
-        // txtClienteSexo.setEnabled(true);
-        // cmbTipid.setEnabled(true);
-
-        // txtClienteId.setText("");
-        // txtClienteId.setEditable(true);
-        // return;
-        // }
-        // return;
-        // }
-        // if (evt.getSource() == rdNuevo) {
-        // btnLimpiar.setEnabled(true);
-        // btnGuardar.setEnabled(true);
-
-        // if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("tipos")) {
-        // txtTipid.setText("*");
-        // txtTipNombre.setEditable(true);
-        // txtTipid.setEditable(false);
-        // return;
-        // }
-        // if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("clientes")) {
-        // txtClienteNombre.setEnabled(true);
-        // txtClienteApellidos.setEnabled(true);
-        // txtClienteSexo.setEnabled(true);
-        // txtClienteLimiteCredito.setEnabled(true);
-        // cmbTipid.setEnabled(true);
-        // txtClienteId.setText("*");
-        // txtClienteId.setEditable(false);
-        // return;
-        // }
-        // }
-        // if (evt.getSource() == btnBuscar) {
-        // if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("tipos")) {
-        // System.out.println("Buscar Tipos");
-        // buscarTip(); // Suponiendo que este método busca los tipos según los
-        // criterios especificados
-        // return;
-        // }
-        // if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("clientes")) {
-        // System.out.println("Buscar Clientes");
-        // buscarCliente(); // Suponiendo que este método busca los clientes según los
-        // criterios
-        // // especificados
-        // return;
-        // }
-        // }
-        // if (evt.getSource() == btnEliminar) {
-        // // Mensaje de alerta para confirmar la eliminación
-        // int dialogResult = JOptionPane.showConfirmDialog(this, "¿Está seguro de
-        // eliminar el registro?",
-        // "Confirmar", JOptionPane.YES_NO_OPTION);
-        // if (dialogResult != JOptionPane.YES_OPTION) {
-        // return;
-        // }
-        // if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("tipos")) {
-        // if (txtTipid.getText().isEmpty() && txtTipNombre.getText().isEmpty()) {
-        // Notifications.getInstance().show(Notifications.Type.INFO,
-        // Notifications.Location.TOP_CENTER,
-        // "Ningún campo insertado, nada para eliminar");
-        // return;
-        // }
-        // eliminarTipo();
-        // limpiar();
-        // return;
-        // }
-        // if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("clientes")) {
-        // if (txtClienteId.getText().isEmpty() && txtClienteNombre.getText().isEmpty()
-        // && txtClienteApellidos.getText().isEmpty() &&
-        // txtClienteSexo.getText().isEmpty()
-        // && txtClienteLimiteCredito.getText().isEmpty()
-        // && cmbTipid.getSelectedItem().toString().equals("Seleccione")) {
-        // Notifications.getInstance().show(Notifications.Type.INFO,
-        // Notifications.Location.TOP_CENTER,
-        // "Ningún campo insertado, nada para eliminar");
-        // return;
-        // }
-        // eliminarCliente();
-        // return;
-        // }
-        // }
+        }
+        if (evt.getSource() == btnBuscar) {
+        }
+        if (evt.getSource() == btnEliminar) {
+            // Mensaje de alerta para confirmar la eliminación
+            int dialogResult = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar el registro?",
+                    "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (dialogResult != JOptionPane.YES_OPTION) {
+                return;
+            }
+            // eliminar();
+        }
 
         try {
             Statement s = ConexionDB.conexion.createStatement();
@@ -370,376 +240,18 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
     }
 
     private void limpiar() {
-
-        if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("tipos")) {
-            if (rdNuevo.isSelected()) {
-                txtTipid.setText("*");
-                txtTipNombre.setText("");
-
-                txtTipNombre.setEnabled(true);
-                return;
-            }
-            txtTipid.setText("");
-            txtTipNombre.setText("");
-            return;
-        }
-        if (cmbTablas.getSelectedItem().toString().equalsIgnoreCase("clientes")) {
-            if (rdNuevo.isSelected()) {
-                txtClienteId.setText("*");
-                txtClienteNombre.setText("");
-                txtClienteApellidos.setText("");
-                txtClienteSexo.setText("");
-                txtClienteLimiteCredito.setText("");
-                cmbTipid.setSelectedItem("Seleccione");
-
-                txtClienteNombre.setEnabled(true);
-                txtClienteApellidos.setEnabled(true);
-                txtClienteSexo.setEnabled(true);
-                txtClienteLimiteCredito.setEnabled(true);
-                cmbTipid.setEnabled(true);
-                return;
-            }
-
-            txtClienteId.setText("");
-            txtClienteNombre.setText("");
-            txtClienteApellidos.setText("");
-            txtClienteSexo.setText("");
-            txtClienteLimiteCredito.setText("");
-            cmbTipid.setSelectedItem("Seleccione");
-            return;
-        }
     }
 
-    private void eliminarCliente() {
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
+    private void eliminar() {
 
-            StringBuilder consulta = new StringBuilder("DELETE FROM clientes WHERE");
-
-            if (!cmbTipid.getSelectedItem().toString().equalsIgnoreCase("Seleccione")) {
-                ResultSet re = s
-                        .executeQuery("SELECT tipid FROM tipos WHERE tipnombre = '" + cmbTipid.getSelectedItem() + "'");
-                re.next();
-                int tipid = re.getInt("tipid");
-                consulta.append(" tipid = ").append(tipid).append("  AND");
-            }
-
-            // Agregar condiciones según los campos proporcionados
-            if (!txtClienteId.getText().isEmpty()) {
-                consulta.append(" cliid = ").append(txtClienteId.getText()).append("  AND");
-            }
-
-            if (!txtClienteNombre.getText().isEmpty()) {
-                consulta.append(" clinombre = '").append(txtClienteNombre.getText()).append("'  AND");
-            }
-
-            if (!txtClienteApellidos.getText().isEmpty()) {
-                consulta.append(" cliapellidos = '").append(txtClienteApellidos.getText()).append("'  AND");
-            }
-
-            if (!txtClienteSexo.getText().isEmpty()) {
-                consulta.append(" clisexo = '").append(txtClienteSexo.getText()).append("'  AND");
-            }
-
-            if (!txtClienteLimiteCredito.getText().isEmpty()) {
-                consulta.append(" cliLimiteCredito = ").append(txtClienteLimiteCredito.getText()).append("  AND");
-            }
-
-            // Eliminar lo adicional al final de la consulta
-            consulta.delete(consulta.length() - 5, consulta.length());
-
-            // Ejecutar la consulta
-            s.execute(consulta.toString());
-
-            if (s.getUpdateCount() == 0) {
-                Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER,
-                        "No se encontraron registros para eliminar.");
-            } else {
-                Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER,
-                        "Registros eliminados correctamente.");
-            }
-
-            // Procesar y mostrar los resultados (usar según tus necesidades)
-            modelo.setRowCount(0);
-            llenarTablaClientes();
-
-        } catch (SQLException e) {
-            ErrorHandler.handleSqlException(e);
-            System.out.println("Error: " + e.getErrorCode());
-        }
     }
 
-    private void eliminarTipo() {
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
+    private void buscar() {
 
-            StringBuilder consulta = new StringBuilder("DELETE FROM tipos WHERE");
-
-            // agregar condiciones según los campos proporcionados
-            if (!txtTipid.getText().isEmpty()) {
-                consulta.append(" tipid = ").append(txtTipid.getText()).append("  AND");
-            }
-
-            if (!txtTipNombre.getText().isEmpty()) {
-                consulta.append(" tipnombre = '").append(txtTipNombre.getText()).append("'  AND");
-            }
-            // Eliminar lo adicional al final de la consulta
-            consulta.delete(consulta.length() - 5, consulta.length());
-
-            // Ejecutar la consulta
-            s.execute(consulta.toString());
-
-            // mostrar notificación
-            if (s.getUpdateCount() == 0) {
-                Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER,
-                        "No se encontró ningún tipo para eliminar.");
-            } else {
-                Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER,
-                        "Tipo eliminado correctamente.");
-            }
-
-            // Procesar y mostrar los resultados (usar según tus necesidades)
-            modelo.setRowCount(0);
-            llenarTabla("TICKETSD");
-
-        } catch (SQLException e) {
-            ErrorHandler.handleSqlException(e);
-            System.out.println("Error: " + e.getErrorCode());
-        }
     }
 
-    private void buscarCliente() {
-        modelo.setRowCount(0);
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
+    private void insertarTabla() {
 
-            StringBuilder consulta = new StringBuilder(
-                    "SELECT cliid, clinombre, cliapellidos, clisexo, cliLimiteCredito, t.tipnombre FROM clientes c INNER JOIN tipos t ON c.tipid = t.tipid WHERE");
-
-            // Verificar y agregar condiciones según los campos proporcionados por el
-            // usuario
-            if (!txtClienteId.getText().isEmpty()) {
-                consulta.append(" c.cliid = ").append(txtClienteId.getText()).append("  AND");
-            }
-
-            if (!txtClienteNombre.getText().isEmpty()) {
-                consulta.append(" c.clinombre LIKE '%").append(txtClienteNombre.getText()).append("%'  AND");
-            }
-
-            if (!txtClienteApellidos.getText().isEmpty()) {
-                consulta.append(" c.cliapellidos LIKE '%").append(txtClienteApellidos.getText()).append("%'  AND");
-            }
-
-            if (!txtClienteSexo.getText().isEmpty()) {
-                consulta.append(" c.clisexo = '").append(txtClienteSexo.getText()).append("'  AND");
-            }
-
-            if (!txtClienteLimiteCredito.getText().isEmpty()) {
-                consulta.append(" c.cliLimiteCredito = ").append(txtClienteLimiteCredito.getText()).append("  AND");
-            }
-
-            if (!cmbTipid.getSelectedItem().toString().equalsIgnoreCase("Seleccione")) {
-                // Suponiendo que cmbTipid contiene los nombres de los tipos y se necesita el id
-                ResultSet re = s
-                        .executeQuery("SELECT tipid FROM tipos WHERE tipnombre = '" + cmbTipid.getSelectedItem() + "'");
-                re.next();
-                int tipid = re.getInt("tipid");
-                consulta.append(" c.tipid = ").append(tipid).append("  AND");
-            }
-
-            // Eliminar el "AND" adicional al final de la consulta
-            consulta.delete(consulta.length() - 5, consulta.length());
-
-            // Ejecutar la consulta
-            ResultSet rs = s.executeQuery(consulta.toString());
-
-            while (rs.next()) {
-                modelo.addRow(new Object[] { rs.getInt("cliid"), rs.getString("clinombre"),
-                        rs.getString("cliapellidos"), rs.getString("clisexo"), rs.getDouble("cliLimiteCredito"),
-                        rs.getString("tipnombre") });
-            }
-
-        } catch (SQLException e) {
-            ErrorHandler.handleSqlException(e);
-            System.out.println("Error: " + e.getErrorCode() + ": " + e);
-        }
-    }
-
-    private void buscarTip() {
-        modelo.setRowCount(0);
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
-
-            StringBuilder consulta = new StringBuilder("SELECT * FROM tipos WHERE");
-
-            // Verificar y agregar condiciones según los campos proporcionados por el
-            // usuario
-            if (!txtTipid.getText().isEmpty()) {
-                consulta.append(" tipid = ").append(txtTipid.getText()).append("  AND");
-            }
-
-            if (!txtTipNombre.getText().isEmpty()) {
-                consulta.append(" tipnombre LIKE '%").append(txtTipNombre.getText()).append("%'  AND");
-            }
-
-            // Eliminar el "AND" adicional al final de la consulta
-            consulta.delete(consulta.length() - 5, consulta.length());
-
-            // Ejecutar la consulta
-            ResultSet rs = s.executeQuery(consulta.toString());
-
-            // Procesar y mostrar los resultados (usar según tus necesidades)
-            while (rs.next()) {
-                modelo.addRow(new Object[] { rs.getInt("tipid"), rs.getString("tipnombre") });
-                System.out.println("TipId: " + rs.getInt("tipid") + ", TipNombre: " + rs.getString("tipnombre"));
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    private void insertarTablaTip() {
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
-
-            // Si el tipo no existe, no se puede modificar en la tabla
-            if (!txtTipid.getText().equals("*")) {
-                ResultSet re = s.executeQuery("SELECT * FROM tipos WHERE tipid = " + txtTipid.getText() + ";");
-                if (!re.next()) {
-                    Notifications.getInstance().show(Notifications.Type.INFO,
-                            Notifications.Location.TOP_CENTER,
-                            "El Tipo no existe.");
-                    return;
-                }
-            }
-
-            // Verificar si el procedimiento ya existe
-            ResultSet rs = s.executeQuery(
-                    "SELECT COUNT(*) FROM information_schema.routines WHERE routine_name = 'Sp_MttoTipos'");
-            rs.next();
-            int procedureCount = rs.getInt(1);
-            if (procedureCount == 0) {
-                s.execute(procedimientoTipos());
-                System.out.println("Procedure created successfully.");
-            }
-
-            if (txtTipid.getText().equals("*")) {
-                txtTipid.setText("0");
-            }
-
-            CallableStatement cs = ConexionDB.conexion.prepareCall("{call Sp_MttoTipos(?, ?)}");
-
-            // Configurar los parámetros de entrada y salida
-            cs.registerOutParameter(1, java.sql.Types.INTEGER);
-            cs.setInt(1, Integer.parseInt(txtTipid.getText())); // tipId
-
-            cs.setString(2, txtTipNombre.getText()); // tipNombre
-
-            cs.execute();
-
-            // Obtener el valor del parámetro de salida tipId
-            int tipIdOutput = cs.getInt(1);
-            System.out.println(txtTipid.getText() + " TIP");
-
-            modelo.setRowCount(0);
-            llenarTabla("TICKETSD");
-
-            // - pendiente de revisar si dejar output o volver a poner *
-            // ---------------------------------------
-            txtTipid.setText(String.valueOf(tipIdOutput));
-            // txtTipid.setText("*");
-            if (rdNuevo.isSelected()) {
-                txtTipNombre.setEnabled(false);
-            }
-
-        } catch (SQLException e) {
-            ErrorHandler.handleSqlException(e);
-            System.out.println("Error: " + e.getErrorCode());
-        }
-    }
-
-    private void insertarTablaCliente() {
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
-
-            // Si el cliente no existe, no se puede modificar en la tabla
-            if (!txtClienteId.getText().equals("*")) {
-                ResultSet re = s.executeQuery(
-                        "SELECT cliid FROM clientes INNER JOIN tipos t ON clientes.tipid = t.tipid WHERE cliid = "
-                                + txtClienteId.getText() + ";");
-                if (!re.next()) {
-                    Notifications.getInstance().show(Notifications.Type.INFO,
-                            Notifications.Location.TOP_CENTER,
-                            "El Cliente no existe.");
-                    re.close();
-                    return;
-                }
-            }
-
-            // Obtener el tipid correspondiente al nombre del tipo seleccionado
-            ResultSet re = s.executeQuery(
-                    "SELECT tipid FROM tipos WHERE tipnombre = '" + cmbTipid.getSelectedItem() + "'");
-            if (!re.next()) {
-                Notifications.getInstance().show(Notifications.Type.ERROR,
-                        Notifications.Location.TOP_CENTER,
-                        "Seleccione un tipo.");
-                re.close();
-                return;
-            }
-            int tipid = re.getInt("tipid");
-            re.close();
-
-            // Verificar si el procedimiento ya existe
-            ResultSet rs = s.executeQuery(
-                    "SELECT COUNT(*) FROM information_schema.routines WHERE routine_name = 'Sp_MttoClientes'");
-            rs.next();
-            int procedureCount = rs.getInt(1);
-            if (procedureCount == 0) {
-                s.execute(procedimientoClientes());
-                System.out.println("Procedure created successfully.");
-            }
-            rs.close();
-
-            if (txtClienteId.getText().equals("*")) {
-                txtClienteId.setText("0");
-            }
-
-            CallableStatement cs = ConexionDB.conexion.prepareCall("{call Sp_MttoClientes(?, ?, ?, ?, ?, ?)}");
-
-            // Configurar los parámetros de entrada y salida
-            cs.registerOutParameter(1, java.sql.Types.INTEGER); // cliId (parámetro de salida)
-            cs.setInt(1, Integer.parseInt(txtClienteId.getText())); // cliId (parámetro de entrada)
-            cs.setString(2, txtClienteNombre.getText()); // cliNombre
-            cs.setString(3, txtClienteApellidos.getText()); // cliApellidos
-            cs.setString(4, txtClienteSexo.getText()); // cliSexo
-            cs.setDouble(5, Double.parseDouble(txtClienteLimiteCredito.getText())); // cliLimiteCredito
-            cs.setInt(6, tipid); // tipId
-
-            cs.execute();
-
-            // Obtener el valor del parámetro de salida cliId
-            int cliIdOutput = cs.getInt(1);
-            cs.close();
-            Notifications.getInstance().show(Notifications.Type.INFO,
-                    Notifications.Location.TOP_CENTER,
-                    "Cliente guardado correctamente. CliId: " + cliIdOutput);
-            modelo.setRowCount(0);
-            llenarTablaClientes();
-            txtClienteId.setText(String.valueOf(cliIdOutput));
-            if (rdNuevo.isSelected()) {
-                btnGuardar.setEnabled(false);
-                txtClienteNombre.setEnabled(false);
-                txtClienteApellidos.setEnabled(false);
-                txtClienteSexo.setEnabled(false);
-                txtClienteLimiteCredito.setEnabled(false);
-                cmbTipid.setEnabled(false);
-            }
-        } catch (SQLException e) {
-            ErrorHandler.handleSqlException(e);
-            System.out.println(e);
-            System.out.println("Error: " + e.getErrorCode());
-        }
     }
 
     private void llenarTabla(String Tabla) {
@@ -786,31 +298,6 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
         }
     }
 
-    private void llenarTablaClientes() {
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
-            ResultSet rs = s.executeQuery(
-                    "SELECT cliid, clinombre, cliapellidos, clisexo, clilimitecredito, t.tipnombre " +
-                            "FROM clientes c " +
-                            "INNER JOIN tipos t ON c.tipid = t.tipid");
-
-            while (rs.next()) {
-                modelo.addRow(new Object[] {
-                        rs.getInt("cliid"),
-                        rs.getString("clinombre"),
-                        rs.getString("cliapellidos"),
-                        rs.getString("clisexo"),
-                        rs.getDouble("clilimitecredito"),
-                        rs.getString("tipnombre")
-                });
-            }
-        } catch (SQLException e) {
-            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER,
-                    "Error al llenar la tabla");
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
     private void showAttributes() {
         panelContent.removeAll();
 
@@ -824,20 +311,6 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
 
         FlatLaf.updateUILater();
         FlatAnimatedLafChange.hideSnapshotWithAnimation();
-    }
-
-    private void llenarComboTipos() {
-        cmbTipid.removeAllItems();
-        cmbTipid.addItem("Seleccione");
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM tipos");
-            while (rs.next()) {
-                cmbTipid.addItem(rs.getString("tipnombre"));
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
     }
 
     private void llenarCombo() {
@@ -1028,44 +501,7 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
 
     @Override
     public void focusLost(FocusEvent e) {
-        // Llenar los campos de texto del cliente
-        if (txtClienteId.getText().isEmpty() || txtClienteId.getText().equals("*") || band) {
-            return;
-        }
-        try {
-            Integer.parseInt(txtClienteId.getText());
-        } catch (NumberFormatException ex) {
-            ErrorHandler.showNotification("Error: El ClienteId no es un número válido.");
-            return;
-        }
 
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
-            ResultSet rs = s.executeQuery(
-                    "SELECT clinombre, cliapellidos, clisexo, clilimitecredito, t.tipnombre " +
-                            "FROM clientes c " +
-                            "INNER JOIN tipos t ON c.tipid = t.tipid " +
-                            "WHERE cliid = " + txtClienteId.getText());
-
-            if (rs.next()) {
-                txtClienteNombre.setText(rs.getString("clinombre"));
-                txtClienteApellidos.setText(rs.getString("cliapellidos"));
-                txtClienteSexo.setText(rs.getString("clisexo"));
-                txtClienteLimiteCredito.setText(rs.getString("clilimitecredito"));
-                cmbTipid.setSelectedItem(rs.getString("tipnombre"));
-            } else {
-                Notifications.getInstance().show(Notifications.Type.INFO,
-                        Notifications.Location.TOP_CENTER,
-                        "El cliente no existe.");
-                txtClienteNombre.setText("");
-                txtClienteApellidos.setText("");
-                txtClienteSexo.setText("");
-                txtClienteLimiteCredito.setText("");
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            ErrorHandler.handleSqlException(ex);
-        }
     }
 
 }
