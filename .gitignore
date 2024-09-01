@@ -1,6 +1,7 @@
-TicketDL.CVSOutput.sql
-TicketDL.CVS
-TicketHL.CVS
-TicketHLOutput.CVS
+datosParaLimpiarYinsertar/TicketDL.CVSOutput.sql
+datosParaLimpiarYinsertar/TicketDL.CVS
+datosParaLimpiarYinsertar/TicketHL.CVS
+datosParaLimpiarYinsertar/TicketHLOutput.CVS
 .vscode/launch.json
 .vscode/settings.json
+*.class
