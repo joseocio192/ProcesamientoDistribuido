@@ -17,7 +17,6 @@ import javax.swing.table.DefaultTableModel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
-import com.formdev.flatlaf.extras.components.FlatTriStateCheckBox.State;
 
 import mode.Rutinas2;
 import raven.toast.Notifications;
@@ -258,26 +257,6 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
 
     }
 
-    private void metodoProyectoTesebadaDondeTenemosQueHacerQueSeSumeUnoAlPrecioDeElProducto(){
-        // Aquí va el código
-        //Esto significa que la aplicación debe ejecutarse de manera concurrente en diferentes computadoras, el usuario seleccionará el criterio (tienda, empleado, estado) por el que desea actualizar el precio (incrementando en un peso) de los productos ya vendidos siempre y cuando tenga 3 o más productos distintos vendidos.
-        //El sistema debe mostrar un mensaje de confirmación de la actualización de los precios de los productos.
-        try{
-            Statement s = ConexionDB.conexion.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM +" + cmbTablas.getSelectedItem().toString());
-            while(rs.next()){
-                ResultSet rs2 = s.executeQuery("SELECT COUNT(DISTINCT idProducto) FROM DetalleVenta WHERE idVenta = " + rs.getInt("idVenta"));
-                rs2.next();
-                if(rs2.getInt(1) >= 3){
-                    s.executeUpdate("UPDATE Producto SET precio = precio + 1 WHERE idProducto = " + rs.getInt("idProducto"));
-                }
-            }
-        }catch(Exception e){
-            ErrorHandler.showNotification("Error: " + e.getMessage());
-        }
-
-    }
-
     // insertarciones en la base de datos
     private void insertarTabla() {
 
@@ -285,7 +264,7 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
             Statement s = ConexionDB.conexion.createStatement();
             s.executeUpdate("begin transaction");
             String query = "insert into " + cmbTablas.getSelectedItem().toString() + " values(";
-            for (int i = 0; i < txtAttribute.length; i++) { 
+            for (int i = 0; i < txtAttribute.length; i++) {
                 if (i == txtAttribute.length - 1) {
                     query += txtAttribute[i].getText() + ")";
                 } else {
@@ -491,62 +470,6 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
                 return;
             }
         }
-    }
-
-    private String procedimientoTipos() {
-        return "CREATE PROCEDURE Sp_MttoTipos\n"
-                + "@tipId INT OUTPUT, @tipNombre VARCHAR(20)\n"
-                + "AS\n"
-                + "BEGIN\n"
-                + "    IF EXISTS(SELECT * FROM tipos WHERE tipid = @tipId)\n"
-                + "    BEGIN\n"
-                + "        UPDATE tipos SET tipnombre = @tipNombre WHERE tipid = @tipId;\n"
-                + "        IF @@ERROR <> 0\n"
-                + "        BEGIN\n"
-                + "            RAISERROR('Error al Actualizar en la tabla Tipos', 16, 10);\n"
-                + "        END\n"
-                + "    END\n"
-                + "    ELSE\n"
-                + "    BEGIN\n"
-                + "        SELECT @tipId = COALESCE(MAX(tipid), 0) + 1 FROM tipos;\n"
-                + "        INSERT INTO tipos VALUES(@tipId, @tipNombre);\n"
-                + "        IF @@ERROR <> 0\n"
-                + "        BEGIN\n"
-                + "            RAISERROR('Error al Insertar en la tabla Tipos', 16, 10);\n"
-                + "        END\n"
-                + "    END\n"
-                + "END;";
-    }
-
-    private String procedimientoClientes() {
-        return "CREATE PROCEDURE Sp_MttoClientes\n"
-                + "@cliId INT OUTPUT, @cliNombre VARCHAR(50), @cliApellidos VARCHAR(50),\n"
-                + "@cliSexo CHAR(1), @cliLimiteCredito NUMERIC(12, 2), @tipId INT\n"
-                + "AS\n"
-                + "BEGIN\n"
-                + "    IF EXISTS(SELECT * FROM clientes WHERE cliid = @cliId)\n"
-                + "    BEGIN\n"
-                + "        UPDATE clientes\n"
-                + "        SET clinombre = @cliNombre, cliApellidos = @cliApellidos,\n"
-                + "            cliSexo = @cliSexo, cliLimiteCredito = @cliLimiteCredito,\n"
-                + "            tipid = @tipId\n"
-                + "        WHERE cliid = @cliId;\n"
-                + "        IF @@ERROR <> 0\n"
-                + "        BEGIN\n"
-                + "            RAISERROR('Error al Actualizar en la tabla Clientes', 16, 10);\n"
-                + "        END\n"
-                + "    END\n"
-                + "    ELSE\n"
-                + "    BEGIN\n"
-                + "        SELECT @cliId = COALESCE(MAX(cliid), 0) + 1 FROM clientes;\n"
-                + "        INSERT INTO clientes\n"
-                + "        VALUES(@cliId, @cliNombre, @cliApellidos, @cliSexo, @cliLimiteCredito, @tipId);\n"
-                + "        IF @@ERROR <> 0\n"
-                + "        BEGIN\n"
-                + "            RAISERROR('Error al Insertar en la tabla Clientes', 16, 10);\n"
-                + "        END\n"
-                + "    END\n"
-                + "END;";
     }
 
     @Override
