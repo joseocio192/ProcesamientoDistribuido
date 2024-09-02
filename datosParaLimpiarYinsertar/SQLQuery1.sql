@@ -2,7 +2,7 @@ create database Empresa
 use empresa 
 go
 create table TICKETSH(
-FOLIO INT NOT NULL,
+TICKET VARCHAR(8) NOT NULL,
 FECHA DATE NOT NULL,
 IDESTADO INT NOT NULL,
 IDCIUDAD INT NOT NULL,
@@ -21,4 +21,5 @@ GO
 alter table ticketsh add primary key(FOLIO)
 alter table TICKETSD ADD PRIMARY KEY(TICKET, IDPRODUCTO)
 
+alter table TICKETSD add foreign key(TICKET) references TICKETSH(FOLIO)
 select * from TICKETSD
