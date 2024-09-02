@@ -20,7 +20,7 @@ public class ConexionDB {
         this.password = password;
     }
 
-    public void getConexion() {
+    public void getConexion(int type) {
 
         // conexionUrl = "jdbc:sqlserver://" + servidor + ";"
         // + "database=" + basededatos + ";"
@@ -38,7 +38,11 @@ public class ConexionDB {
             conexion = DriverManager.getConnection(conexionUrl);
             if (conexion != null) {
                 System.out.println("Conectado a la base de datos");
-                App.login(conexion);
+                if (type == 1) {
+                    App.login(conexion);
+                } else {
+                    App.loginClemente(conexion);
+                }
             }
         } catch (SQLException e) {
             Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER,

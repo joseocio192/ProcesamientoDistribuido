@@ -52,6 +52,13 @@ public class App extends JFrame {
         FlatAnimatedLafChange.hideSnapshotWithAnimation();
     }
 
+    public static void loginClemente(Connection conexion) {
+        menuClemente menuClemente = new menuClemente(conexion);
+        app.setContentPane(menuClemente);
+        menuClemente.applyComponentOrientation(app.getComponentOrientation());
+        SwingUtilities.updateComponentTreeUI(menuClemente);
+    }
+
     public static void logout() {
         vista = new Vista(app);
 

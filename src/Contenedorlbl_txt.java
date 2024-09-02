@@ -37,14 +37,15 @@ class Contenedorlbl_txt implements LayoutManager {
 
             Component componente = miContenedor.getComponent(i);
 
-            if (i == nComponentes - 1) {
+            // if (i == nComponentes - 1) {
 
-                int anchoComponente = (int) (miContenedor.getWidth() / 2);
-                int altoComponente = (int) (miContenedor.getHeight() * 0.12);
+            // int anchoComponente = (int) (miContenedor.getWidth() / 2);
+            // int altoComponente = (int) (miContenedor.getHeight() * 0.12);
 
-                componente.setBounds(miContenedor.getWidth() / 4, y, anchoComponente, altoComponente);
-                break;
-            }
+            // componente.setBounds(miContenedor.getWidth() / 4, y, anchoComponente,
+            // altoComponente);
+            // break;
+            // }
             int anchoComponente = (int) (miContenedor.getWidth() * 0.4);
             if (contador % 2 == 0) {
                 anchoComponente = (int) (miContenedor.getWidth() * 0.5);

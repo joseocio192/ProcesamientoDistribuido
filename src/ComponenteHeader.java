@@ -39,6 +39,12 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
         logout.addActionListener(this);
     }
 
+    public ComponenteHeader(menuClemente menu) {
+        initClementeHeader();
+        addComponentListener(this);
+        logout.addActionListener(this);
+    }
+
     public void init() {
         setBorder(new EmptyBorder(2, 2, 2, 2));
         setLayout(null);
@@ -82,6 +88,27 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
         // -----------------------------------------------------------
     }
 
+    public void initClementeHeader() {
+        setBorder(new EmptyBorder(2, 2, 2, 2));
+        setLayout(null);
+
+        lightDarkMode = new LightDarkMode(60);
+        add(lightDarkMode);
+
+        logout = new JButton("Logout");
+        logout.putClientProperty(FlatClientProperties.STYLE, ""
+                + "arc:9;"
+                + "focusWidth:0;"
+                + "borderWidth:0;"
+                + "innerFocusWidth:0");
+        add(logout);
+
+        lblModo = new JLabel("Modo");
+        add(lblModo);
+
+        // -----------------------------------------------------------
+    }
+
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (logout == evt.getSource()) {
@@ -119,8 +146,8 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
         logout.setBounds((int) (w * .7), (int) (h * .5), (int) (w * .25), (int) (h * .3));
         logout.setFont(Rutinas2.getFont("Roboto", true, (int) (h), w, h, 670));
         // logout.setFont(new Font("Roboto", Font.BOLD, (int) (h * .3)));
-
-        pnlBtn.setBounds((int) (w * .05), (int) (h * .5), (int) (w * .55), (int) (h * .30));
+        if (pnlBtn != null)
+            pnlBtn.setBounds((int) (w * .05), (int) (h * .5), (int) (w * .55), (int) (h * .30));
     }
 
     @Override
