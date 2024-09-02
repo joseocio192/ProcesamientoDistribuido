@@ -31,7 +31,7 @@ public class App extends JFrame {
     }
 
     public void HazInterfaz() {
-        setSize(600, 600);
+        setSize(650, 700);
         setMinimumSize(new Dimension(350, 350));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

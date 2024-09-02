@@ -35,7 +35,6 @@ public class ConexionDB {
                 + "trustServerCertificate=true;"
                 + "loginTimeout=5;";
         try {
-
             conexion = DriverManager.getConnection(conexionUrl);
             if (conexion != null) {
                 System.out.println("Conectado a la base de datos");
