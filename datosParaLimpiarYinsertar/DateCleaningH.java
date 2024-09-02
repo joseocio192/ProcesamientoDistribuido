@@ -10,8 +10,8 @@ import java.util.Map;
 public class DateCleaningH {
 
     public static void main(String[] args) {
-        String inputFile = "TicketH.CVS"; // Ruta del archivo CSV de entrada
-        String outputFile = "TicketHL.CVS"; // Ruta del archivo CSV de salida
+        String inputFile = "F:\\Tesebada\\procesamientoDistribuido\\ProcesamientoDistribuido\\datosParaLimpiarYinsertar\\TicketH.CVS"; // Ruta del archivo CSV de entrada
+        String outputFile = "F:\\\\Tesebada\\\\procesamientoDistribuido\\\\ProcesamientoDistribuido\\\\datosParaLimpiarYinsertar\\TicketHL.CVS"; // Ruta del archivo CSV de salida
         String line;
         String csvDelimiter = ",";
 
@@ -44,8 +44,7 @@ public class DateCleaningH {
                 // Separar los campos por delimitador (coma)
                 String[] datos = line.split(csvDelimiter);
 
-                // Limpiar el FOLIO eliminando ceros iniciales
-                String folioLimpio = String.valueOf(Integer.parseInt(datos[0]));
+                String folioLimpio =datos[0];
 
                // Limpiar la fecha reemplazando el nombre del mes por su número
                String[] fechaPartes = datos[1].split("/");

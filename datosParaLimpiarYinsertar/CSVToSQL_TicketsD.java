@@ -7,8 +7,8 @@ import java.io.IOException;
 public class CSVToSQL_TicketsD {
 
     public static void main(String[] args) {
-        String csvFile = "TicketDL.CVS";
-        String outputFile = "TicketDL.CVSOutput.sql";
+        String csvFile = "datosParaLimpiarYinsertar\\TicketDL.csv";
+        String outputFile = "datosParaLimpiarYinsertar\\TicketDOutput.sql";
         String line;
         String csvSplitBy = ",";
 

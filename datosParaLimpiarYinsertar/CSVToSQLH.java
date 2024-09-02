@@ -13,8 +13,8 @@ public class CSVToSQLH {
     private static final SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public static void main(String[] args) {
-        String csvFile = "TicketHL.CVS";
-        String outputFile = "TicketHLOutput.CVS";
+        String csvFile = "F:\\Tesebada\\procesamientoDistribuido\\ProcesamientoDistribuido\\datosParaLimpiarYinsertar\\TicketHL.CVS";
+        String outputFile = "F:\\\\Tesebada\\\\procesamientoDistribuido\\\\ProcesamientoDistribuido\\\\datosParaLimpiarYinsertar\\\\TicketHLOutput.sql";
         String line;
         String csvSplitBy = ",";
 
@@ -29,7 +29,7 @@ public class CSVToSQLH {
                 String[] values = line.split(csvSplitBy);
 
                 // Asumiendo que el formato es correcto y tiene todos los campos
-                int folio = Integer.parseInt(values[0]);
+                String folio = values[0];
                 String fechaStr = values[1];
                 int idEstado = Integer.parseInt(values[2]);
                 int idCiudad = Integer.parseInt(values[3]);
@@ -41,7 +41,7 @@ public class CSVToSQLH {
 
                 // Crear la sentencia SQL INSERT
                 String sql = String.format(
-                    "INSERT INTO TICKETSH (FOLIO, FECHA, IDESTADO, IDCIUDAD, IDTIENDA, IDEMPLEADO) VALUES (%d, '%s', %d, %d, %d, %d);%n",
+                    "INSERT INTO TICKETSH (TICKET, FECHA, IDESTADO, IDCIUDAD, IDTIENDA, IDEMPLEADO) VALUES ('%s', '%s', %d, %d, %d, %d);%n",
                     folio, fechaSQL, idEstado, idCiudad, idTienda, idEmpleado
                 );
 

@@ -10,8 +10,8 @@ import java.util.List;
 public class DataCleaningD {
 
     public static void main(String[] args) {
-        String inputFile = "TicketD.CVS"; // Ruta del archivo CSV de entrada
-        String outputFile = "TicketDL.csv"; // Ruta del archivo CSV de salida
+        String inputFile = "datosParaLimpiarYinsertar\\TicketD.CVS"; // Ruta del archivo CSV de entrada
+        String outputFile = "datosParaLimpiarYinsertar\\TicketDL.CVS"; // Ruta del archivo CSV de salida
         String line;
         String csvDelimiter = ",";
 
@@ -34,10 +34,10 @@ public class DataCleaningD {
                 }
 
                 // Eliminar ceros iniciales en FOLIO convirtiéndolo a entero y luego de nuevo a String
-                String folioSinCeros = String.valueOf(Integer.parseInt(datos[0]));
+                String foliod= datos[0];
 
                 // Almacenar los datos en las listas
-                folio.add(folioSinCeros);
+                folio.add(foliod);
                 producto.add(Integer.parseInt(datos[1]));
                 unidades.add(Integer.parseInt(datos[2]));
 
