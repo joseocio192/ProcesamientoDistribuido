@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
+import com.formdev.flatlaf.extras.components.FlatTriStateCheckBox.State;
 
 import mode.Rutinas2;
 import raven.toast.Notifications;
@@ -202,6 +203,7 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
         }
 
         if (evt.getSource() == btnGuardar) {
+            insertarTabla();
             return;
         }
 
@@ -239,18 +241,71 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
         }
     }
 
+    // limpieza de los campos
     private void limpiar() {
+        for (int i = 0; i < txtAttribute.length; i++) {
+            txtAttribute[i].setText("");
+        }
     }
 
+    // eliminaciones en la base de datos
     private void eliminar() {
 
     }
 
+    // querys de busqueda
     private void buscar() {
 
     }
 
+    private void metodoProyectoTesebadaDondeTenemosQueHacerQueSeSumeUnoAlPrecioDeElProducto(){
+        // Aquí va el código
+        //Esto significa que la aplicación debe ejecutarse de manera concurrente en diferentes computadoras, el usuario seleccionará el criterio (tienda, empleado, estado) por el que desea actualizar el precio (incrementando en un peso) de los productos ya vendidos siempre y cuando tenga 3 o más productos distintos vendidos.
+        //El sistema debe mostrar un mensaje de confirmación de la actualización de los precios de los productos.
+        try{
+            Statement s = ConexionDB.conexion.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM +" + cmbTablas.getSelectedItem().toString());
+            while(rs.next()){
+                ResultSet rs2 = s.executeQuery("SELECT COUNT(DISTINCT idProducto) FROM DetalleVenta WHERE idVenta = " + rs.getInt("idVenta"));
+                rs2.next();
+                if(rs2.getInt(1) >= 3){
+                    s.executeUpdate("UPDATE Producto SET precio = precio + 1 WHERE idProducto = " + rs.getInt("idProducto"));
+                }
+            }
+        }catch(Exception e){
+            ErrorHandler.showNotification("Error: " + e.getMessage());
+        }
+
+    }
+
+    // insertarciones en la base de datos
     private void insertarTabla() {
+
+        try {
+            Statement s = ConexionDB.conexion.createStatement();
+            s.executeUpdate("begin transaction");
+            String query = "insert into " + cmbTablas.getSelectedItem().toString() + " values(";
+            for (int i = 0; i < txtAttribute.length; i++) { 
+                if (i == txtAttribute.length - 1) {
+                    query += txtAttribute[i].getText() + ")";
+                } else {
+                    query += txtAttribute[i].getText() + ",";
+                }
+            }
+            System.out.println(query);
+            s.executeUpdate(query);
+            s.executeUpdate("commit transaction");
+            System.out.println("Registro insertado");
+        } catch (Exception e) {
+            ErrorHandler.showNotification("Error: " + e.getMessage());
+            Statement s;
+            try {
+                s = ConexionDB.conexion.createStatement();
+                s.executeUpdate("rollback transaction");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
 
     }
 
@@ -284,7 +339,7 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
                 j++;
             }
 
-            ResultSet rs2 = s.executeQuery("SELECT top 5 * FROM " + Tabla);
+            ResultSet rs2 = s.executeQuery("SELECT * FROM " + Tabla);
 
             while (rs2.next()) {
                 Object[] fila = new Object[modelo.getColumnCount()];
@@ -332,7 +387,7 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
     public void setModo(int modo) {
         // Common actions
         grupo.clearSelection();
-        btnGuardar.setEnabled(false);
+        btnGuardar.setEnabled(true);
         scroll.setVisible(true);
         panel.setVisible(true);
 
@@ -350,8 +405,8 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
             // Set properties for consultation mode
             rdModificar.setVisible(false);
             rdNuevo.setVisible(false);
-            btnLimpiar.setVisible(false);
-            btnGuardar.setVisible(false);
+            btnLimpiar.setVisible(true);
+            btnGuardar.setVisible(true);
             btnBuscar.setVisible(true);
             btnEliminar.setVisible(true);
         }
