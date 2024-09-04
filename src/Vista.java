@@ -69,13 +69,13 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
         lblServidor = new JLabel("Servidor");
         panel.add(lblServidor);
 
-        txtServidor = new JTextField("26.252.58.226");
+        txtServidor = new JTextField("Once");
         panel.add(txtServidor);
 
         lblBasedeDatos = new JLabel("Base de Datos");
         panel.add(lblBasedeDatos);
 
-        txtBasedeDatos = new JTextField("empresa");
+        txtBasedeDatos = new JTextField("DBTickets");
         panel.add(txtBasedeDatos);
 
         lblUsuario = new JLabel("Usuario");
@@ -87,7 +87,7 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
         lblContraseña = new JLabel("Contraseña");
         panel.add(lblContraseña);
 
-        txtContraseña = new JPasswordField("123456");
+        txtContraseña = new JPasswordField("123456789");
         panel.add(txtContraseña);
 
         btnConectar = new JButton("Conectar");

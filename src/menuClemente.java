@@ -140,7 +140,6 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
 
         scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scroll.setVisible(false);
         pnlTabla.add(scroll, BorderLayout.CENTER);
 
         pnlTabla.add(scroll, BorderLayout.CENTER);
@@ -200,7 +199,9 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
                 return;
             }
 
-            sumarUnoPrecio();
+            for (int i = 0; i < 100; i++) {
+                sumarUnoPrecio();
+            }
         }
         if (evt.getSource() == rdEstado) {
             btnPrecioMasUno.setEnabled(true);
@@ -252,8 +253,8 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
             try {
                 System.out.println(lblAtributoFiltro.getText() + " " + cmbFK.getSelectedItem().toString());
                 s = ConexionDB.conexion.createStatement();
-                s.executeUpdate("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE\r\n"
-                        + "BEGIN transaction");
+                // s.executeUpdate("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE\r\n"
+                // + "BEGIN transaction");
                 String query = "UPDATE TICKETSD " +
                         "SET TICKETSD.PRECIO = TICKETSD.PRECIO + 1 " +
                         "FROM TICKETSD " +
@@ -263,7 +264,7 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
                         "     FROM TICKETSD " +
                         "     WHERE TICKETSD.TICKET = TICKETSH.TICKET) >= 3";
                 int rowsAffected = s.executeUpdate(query);
-                s.executeUpdate("commit transaction");
+                // s.executeUpdate("commit transaction");
                 if (rowsAffected > 0) {
                     System.out.println("Registro actualizado");
                     Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER,
