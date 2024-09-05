@@ -19,21 +19,18 @@ import com.formdev.flatlaf.FlatClientProperties;
 import mode.Rutinas2;
 import raven.toast.Notifications;
 
-public class menuClemente extends JPanel implements ComponentListener, ActionListener, ItemListener, FocusListener {
-    final static String TICKETSD = "TICKETSD";
-    final static String TICKETSH = "TICKETSH";
+public class MenuClemente extends JPanel implements ComponentListener, ActionListener, ItemListener, FocusListener {
+    static final String TICKETSD = "TICKETSD";
+    static final String TICKETSH = "TICKETSH";
 
     private JPanel panel;
     private JPanel panelContent;
     private JPanel pnlTabla;
 
-    private JComboBox<String> cmbTablas;
+    private JComboBox<String> tableDropdown;
 
     private JLabel lblAtributoFiltro;
-    private JComboBox<String> cmbFK;
-
-    private JLabel lblPrecio;
-    private JTextField txtPrecio;
+    private JComboBox<String> priceDropdown;
 
     private JButton btnLimpiar;
     private JButton btnPrecioMasUno;
@@ -51,15 +48,15 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
 
     private ComponenteHeader componenteHeader;
 
-    public menuClemente(Connection conexion) {
+    public MenuClemente(Connection conexion) {
         init();
         HazEscuchas();
     }
 
     private void HazEscuchas() {
         addComponentListener(this);
-        cmbTablas.addItemListener(this);
-        cmbTablas.addActionListener(this);
+        tableDropdown.addItemListener(this);
+        tableDropdown.addActionListener(this);
         btnPrecioMasUno.addActionListener(this);
         btnLimpiar.addActionListener(this);
         rdEstado.addActionListener(this);
@@ -81,13 +78,18 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
                 + "background:$Menu.background;"
                 + "border:10,20,30,10");
 
-        cmbTablas = new JComboBox<String>(new String[] { "Seleccione" });
+        tableDropdown = new JComboBox<String>(new String[] { "Seleccione" });
         llenarCombo();
-        panel.add(cmbTablas);
+        panel.add(tableDropdown);
 
         rdEstado = new JRadioButton("Estado");
         rdCiudad = new JRadioButton("Ciudad");
         rdTienda = new JRadioButton("Tienda");
+
+        rdEstado.setEnabled(false);
+        rdCiudad.setEnabled(false);
+        rdTienda.setEnabled(false);
+
         panel.add(rdEstado);
         panel.add(rdCiudad);
         panel.add(rdTienda);
@@ -115,18 +117,11 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
                 + "border:10,20,30,10");
         add(panelContent);
 
-        lblPrecio = new JLabel("Precio");
-        panelContent.add(lblPrecio);
-        lblPrecio.setVisible(selected);
-        txtPrecio = new JTextField();
-        panelContent.add(txtPrecio);
-        txtPrecio.setVisible(selected);
-
         lblAtributoFiltro = new JLabel();
         panelContent.add(lblAtributoFiltro);
-        cmbFK = new JComboBox<String>(new String[] { "Seleccione" });
-        panelContent.add(cmbFK);
-        cmbFK.setVisible(false);
+        priceDropdown = new JComboBox<String>(new String[] { "Seleccione" });
+        panelContent.add(priceDropdown);
+        priceDropdown.setVisible(false);
 
         // PNLTABLA-------------------------------------------------------
         pnlTabla = new JPanel();
@@ -152,12 +147,10 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == cmbTablas) {
+        if (evt.getSource() == tableDropdown) {
             rdEstado.setEnabled(true);
             rdCiudad.setEnabled(true);
             rdTienda.setEnabled(true);
-            lblPrecio.setVisible(selected);
-            txtPrecio.setVisible(selected);
             // if (!band) {
             // if (rdNuevo.isSelected()) {
             // txtTipid.setText("*");
@@ -192,8 +185,9 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
             }
 
             int dialogResult = JOptionPane.showConfirmDialog(this,
-                    "¿Está seguro de sumar uno al precio de la tabla: " + cmbTablas.getSelectedItem().toString()
-                            + ",  Atributo: " + atributo + ", Valor: " + cmbFK.getSelectedItem().toString() + "?",
+                    "¿Está seguro de sumar uno al precio de la tabla: " + tableDropdown.getSelectedItem().toString()
+                            + ",  Atributo: " + atributo + ", Valor: " + priceDropdown.getSelectedItem().toString()
+                            + "?",
                     "Confirmar", JOptionPane.YES_NO_OPTION);
             if (dialogResult != JOptionPane.YES_OPTION) {
                 return;
@@ -217,19 +211,19 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
             btnPrecioMasUno.setEnabled(true);
             lblAtributoFiltro.setText("IDESTADO");
             llenarComboFK("IDESTADO");
-            cmbFK.setVisible(true);
+            priceDropdown.setVisible(true);
         }
         if (evt.getSource() == rdCiudad) {
             btnPrecioMasUno.setEnabled(true);
             lblAtributoFiltro.setText("IDCIUDAD");
             llenarComboFK("IDCIUDAD");
-            cmbFK.setVisible(true);
+            priceDropdown.setVisible(true);
         }
         if (evt.getSource() == rdTienda) {
             btnPrecioMasUno.setEnabled(true);
             lblAtributoFiltro.setText("IDTIENDA");
             llenarComboFK("IDTIENDA");
-            cmbFK.setVisible(true);
+            priceDropdown.setVisible(true);
         }
 
         try {
@@ -237,7 +231,7 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
             ResultSet rs = s
                     .executeQuery(
                             "SELECT top 1 TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'"
-                                    + cmbTablas.getSelectedItem().toString()
+                                    + tableDropdown.getSelectedItem().toString()
                                     + "' ");
             rs.next();
 
@@ -260,14 +254,15 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
 
         while (!success) {
             try {
-                System.out.println(lblAtributoFiltro.getText() + " " + cmbFK.getSelectedItem().toString());
+                System.out.println(lblAtributoFiltro.getText() + " " + priceDropdown.getSelectedItem().toString());
                 s = ConexionDB.conexion.createStatement();
                 s.executeUpdate("BEGIN transaction");
                 String query = "UPDATE TICKETSD " +
                         "SET TICKETSD.PRECIO = TICKETSD.PRECIO + 1 " +
                         "FROM TICKETSD " +
                         "INNER JOIN TICKETSH ON TICKETSD.TICKET = TICKETSH.TICKET " +
-                        "WHERE TICKETSH." + lblAtributoFiltro.getText() + " = " + cmbFK.getSelectedItem().toString() +
+                        "WHERE TICKETSH." + lblAtributoFiltro.getText() + " = "
+                        + priceDropdown.getSelectedItem().toString() +
                         " AND (SELECT COUNT(DISTINCT TICKETSD.IDPRODUCTO) " +
                         "     FROM TICKETSD " +
                         "     WHERE TICKETSD.TICKET = TICKETSH.TICKET) >= 3";
@@ -322,9 +317,9 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
                     .executeQuery("select TABLE_NAME from INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'"
                             + TICKETSD + "' ");
             while (rs.next()) {
-                cmbTablas.addItem(rs.getString("TABLE_NAME"));
+                tableDropdown.addItem(rs.getString("TABLE_NAME"));
             }
-            cmbTablas.setSelectedIndex(0);
+            tableDropdown.setSelectedIndex(0);
         } catch (Exception e) {
             Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER,
                     "Error, " + e.getMessage());
@@ -334,17 +329,17 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
 
     private void llenarComboFK(String filtro) {
         try {
-            cmbFK.removeAllItems();
-            cmbFK.addItem("Seleccione");
+            priceDropdown.removeAllItems();
+            priceDropdown.addItem("Seleccione");
             Statement s = ConexionDB.conexion.createStatement();
             ResultSet rs = s
                     .executeQuery(
-                            "SELECT distinct(" + filtro + ") FROM " + cmbTablas.getSelectedItem().toString() + " D "
+                            "SELECT distinct(" + filtro + ") FROM " + tableDropdown.getSelectedItem().toString() + " D "
                                     + " inner join " + TICKETSH + " H on " + "D.TICKET = H.TICKET order by " + filtro);
             while (rs.next()) {
-                cmbFK.addItem(rs.getString(filtro));
+                priceDropdown.addItem(rs.getString(filtro));
             }
-            cmbFK.setSelectedIndex(0);
+            priceDropdown.setSelectedIndex(0);
         } catch (Exception e) {
             ErrorHandler.showNotification("Error: " + e.getMessage());
         }
@@ -368,12 +363,12 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
         int anchoComponente = (int) (w * .4);
         int altoComponente = (int) (h * .8);
         // -----------------------------------------------------------
-        cmbTablas.setBounds((int) ((w * .025)), (int) (h * .03),
+        tableDropdown.setBounds((int) ((w * .025)), (int) (h * .03),
                 anchoComponente,
                 altoComponente);
-        cmbTablas.setFont(Rutinas2.getFont("SegoeUI", false, 10, getWidth(), getHeight(), 350));
+        tableDropdown.setFont(Rutinas2.getFont("SegoeUI", false, 10, getWidth(), getHeight(), 350));
 
-        rdEstado.setBounds((int) (cmbTablas.getX() * 1.2) + cmbTablas.getWidth(), (int) (h * .05),
+        rdEstado.setBounds((int) (tableDropdown.getX() * 1.2) + tableDropdown.getWidth(), (int) (h * .05),
                 (int) (w * .20),
                 (int) (h * .30));
         rdEstado.setFont(Rutinas2.getFont("SegoeUI", false, 10, getWidth(), getHeight(), 370));
@@ -389,7 +384,7 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
         rdTienda.setFont(Rutinas2.getFont("SegoeUI", false, 10, getWidth(), getHeight(), 370));
 
         btnLimpiar.setBounds(rdEstado.getX() + rdEstado.getWidth(), (int) (h * .05),
-                (int) (w * .97) - cmbTablas.getWidth() - rdEstado.getWidth() - cmbTablas.getWidth(),
+                (int) (w * .97) - tableDropdown.getWidth() - rdEstado.getWidth() - tableDropdown.getWidth(),
                 (int) (h * .45));
         btnLimpiar.setFont(Rutinas2.getFont("SegoeUI", false, 10, getWidth(), getHeight(), 400));
 
@@ -417,9 +412,9 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
 
     @Override
     public void itemStateChanged(ItemEvent evt) {
-        if (evt.getSource() == cmbTablas) {
+        if (evt.getSource() == tableDropdown) {
             if (!selected) {
-                cmbTablas.removeItem("Seleccione");
+                tableDropdown.removeItem("Seleccione");
                 selected = true;
                 return;
             }
