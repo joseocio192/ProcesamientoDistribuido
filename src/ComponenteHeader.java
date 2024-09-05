@@ -39,7 +39,7 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
         logout.addActionListener(this);
     }
 
-    public ComponenteHeader(menuClemente menu) {
+    public ComponenteHeader(MenuClemente menu) {
         initClementeHeader();
         addComponentListener(this);
         logout.addActionListener(this);

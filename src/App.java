@@ -53,7 +53,7 @@ public class App extends JFrame {
     }
 
     public static void loginClemente(Connection conexion) {
-        menuClemente menuClemente = new menuClemente(conexion);
+        MenuClemente menuClemente = new MenuClemente(conexion);
         app.setContentPane(menuClemente);
         menuClemente.applyComponentOrientation(app.getComponentOrientation());
         SwingUtilities.updateComponentTreeUI(menuClemente);
