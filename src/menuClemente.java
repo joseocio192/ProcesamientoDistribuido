@@ -199,8 +199,18 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
                 return;
             }
 
-            for (int i = 0; i < 100; i++) {
-                sumarUnoPrecio();
+            for (int i = 0; i < 200; i++) {
+                try {
+                    // if (sumarUnoPrecio() == 0) {
+                    // ErrorHandler.showNotification("No se pudo sumar uno al precio");
+                    // break;
+                    // } else {
+                    // ErrorHandler.showNotification("Se sumó uno al precio");
+                    // }
+                    sumarUnoPrecio();
+                } catch (SQLException e) {
+                    ErrorHandler.showNotification("Error: " + e.getMessage());
+                }
             }
         }
         if (evt.getSource() == rdEstado) {
@@ -243,18 +253,16 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
 
     }
 
-    private void sumarUnoPrecio() {
+    private int sumarUnoPrecio() throws SQLException {
         Statement s = null;
-        int maxRetries = 5;
-        int attempt = 0;
         boolean success = false;
+        int rowsAffected = 0;
 
-        while (attempt < maxRetries && !success) {
+        while (!success) {
             try {
                 System.out.println(lblAtributoFiltro.getText() + " " + cmbFK.getSelectedItem().toString());
                 s = ConexionDB.conexion.createStatement();
-                // s.executeUpdate("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE\r\n"
-                // + "BEGIN transaction");
+                s.executeUpdate("BEGIN transaction");
                 String query = "UPDATE TICKETSD " +
                         "SET TICKETSD.PRECIO = TICKETSD.PRECIO + 1 " +
                         "FROM TICKETSD " +
@@ -263,38 +271,19 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
                         " AND (SELECT COUNT(DISTINCT TICKETSD.IDPRODUCTO) " +
                         "     FROM TICKETSD " +
                         "     WHERE TICKETSD.TICKET = TICKETSH.TICKET) >= 3";
-                int rowsAffected = s.executeUpdate(query);
-                // s.executeUpdate("commit transaction");
-                if (rowsAffected > 0) {
-                    System.out.println("Registro actualizado");
-                    Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER,
-                            "Registro actualizado");
-                } else {
-                    Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER,
-                            "No se realizaron Cambios");
-                }
+                rowsAffected = s.executeUpdate(query);
+                s.executeUpdate("commit transaction");
                 success = true;
             } catch (SQLException e) {
-                if (e.getMessage().contains("Transaction (Process ID 55) was deadlocked")) {
-                    attempt++;
-                    if (attempt >= maxRetries) {
-                        Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER,
-                                "Error: Transaction (Process ID 55) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.");
-                    }
-                } else {
+                if (e.getErrorCode() == 1205) {
                     ErrorHandler.showNotification("Error: " + e.getMessage());
-                    break;
-                }
-            } finally {
-                if (s != null) {
-                    try {
-                        s.close();
-                    } catch (SQLException e) {
-                        ErrorHandler.showNotification("Error closing statement: " + e.getMessage());
-                    }
+                } else {
+                    ErrorHandler.handleSqlException(e);
+                    success = true;
                 }
             }
         }
+        return rowsAffected;
     }
 
     private void llenarTabla(String Tabla) {

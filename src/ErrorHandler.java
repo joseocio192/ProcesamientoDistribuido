@@ -56,7 +56,7 @@ public class ErrorHandler {
     }
 
     public static void showNotification(String message) {
-        System.out.println("Mostrar notificación de error en el centro: " + message);
-        Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, message);
+        System.out.println("Notificacion: " + message);
+        Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, message);
     }
 }
