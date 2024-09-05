@@ -208,7 +208,7 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
                     // ErrorHandler.showNotification("Se sumó uno al precio");
                     // }
                     sumarUnoPrecio();
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     ErrorHandler.showNotification("Error: " + e.getMessage());
                 }
             }
@@ -253,7 +253,7 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
 
     }
 
-    private int sumarUnoPrecio() throws SQLException {
+    private int sumarUnoPrecio() throws SQLException, InterruptedException {
         Statement s = null;
         boolean success = false;
         int rowsAffected = 0;
@@ -301,7 +301,7 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
                 modelo.addColumn(rs1.getString("COLUMN_NAME"));
             }
 
-            ResultSet rs2 = s.executeQuery("SELECT top 500 * FROM " + Tabla);
+            ResultSet rs2 = s.executeQuery("SELECT top 1000 * FROM " + Tabla);
 
             while (rs2.next()) {
                 Object[] fila = new Object[modelo.getColumnCount()];
@@ -340,7 +340,7 @@ public class menuClemente extends JPanel implements ComponentListener, ActionLis
             ResultSet rs = s
                     .executeQuery(
                             "SELECT distinct(" + filtro + ") FROM " + cmbTablas.getSelectedItem().toString() + " D "
-                                    + " inner join " + TICKETSH + " H on " + "D.TICKET = H.TICKET ");
+                                    + " inner join " + TICKETSH + " H on " + "D.TICKET = H.TICKET order by " + filtro);
             while (rs.next()) {
                 cmbFK.addItem(rs.getString(filtro));
             }
