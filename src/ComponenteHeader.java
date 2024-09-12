@@ -39,8 +39,8 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
         logout.addActionListener(this);
     }
 
-    public ComponenteHeader(MenuClemente menu) {
-        initClementeHeader();
+    public ComponenteHeader(MenuSuma menu) {
+        initSumaHeader();
         addComponentListener(this);
         logout.addActionListener(this);
     }
@@ -88,7 +88,7 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
         // -----------------------------------------------------------
     }
 
-    public void initClementeHeader() {
+    public void initSumaHeader() {
         setBorder(new EmptyBorder(2, 2, 2, 2));
         setLayout(null);
 

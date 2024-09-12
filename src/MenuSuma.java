@@ -19,7 +19,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import mode.Rutinas2;
 import raven.toast.Notifications;
 
-public class MenuClemente extends JPanel implements ComponentListener, ActionListener, ItemListener, FocusListener {
+public class MenuSuma extends JPanel implements ComponentListener, ActionListener, ItemListener, FocusListener {
     static final String TICKETSD = "TICKETSD";
     static final String TICKETSH = "TICKETSH";
 
@@ -48,7 +48,7 @@ public class MenuClemente extends JPanel implements ComponentListener, ActionLis
 
     private ComponenteHeader componenteHeader;
 
-    public MenuClemente(Connection conexion) {
+    public MenuSuma(Connection conexion) {
         init();
         HazEscuchas();
     }
@@ -226,8 +226,7 @@ public class MenuClemente extends JPanel implements ComponentListener, ActionLis
             priceDropdown.setVisible(true);
         }
 
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
+        try (Statement s = ConexionDB.conexion.createStatement()) {
             ResultSet rs = s
                     .executeQuery(
                             "SELECT top 1 TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'"
@@ -248,14 +247,12 @@ public class MenuClemente extends JPanel implements ComponentListener, ActionLis
     }
 
     private int sumarUnoPrecio() throws SQLException, InterruptedException {
-        Statement s = null;
         boolean success = false;
         int rowsAffected = 0;
 
         while (!success) {
-            try {
+            try (Statement s = ConexionDB.conexion.createStatement()) {
                 System.out.println(lblAtributoFiltro.getText() + " " + priceDropdown.getSelectedItem().toString());
-                s = ConexionDB.conexion.createStatement();
                 s.executeUpdate("BEGIN transaction");
                 String query = "UPDATE TICKETSD " +
                         "SET TICKETSD.PRECIO = TICKETSD.PRECIO + 1 " +

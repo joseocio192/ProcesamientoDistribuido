@@ -14,7 +14,7 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
     private static App app;
 
     private JButton btnConectar;
-    private JButton btnConectarClemente;
+    private JButton btnConectarSuma;
 
     private JLabel lblLogin;
     private JLabel lblServidor;
@@ -44,7 +44,7 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
     private void HazEscuchas() {
         addComponentListener(this);
         btnConectar.addActionListener(this);
-        btnConectarClemente.addActionListener(this);
+        btnConectarSuma.addActionListener(this);
     }
 
     private void HazInterfaz() {
@@ -93,8 +93,8 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
         btnConectar = new JButton("Conectar");
         panel.add(btnConectar);
 
-        btnConectarClemente = new JButton("Clemente");
-        panel.add(btnConectarClemente);
+        btnConectarSuma = new JButton("Suma");
+        panel.add(btnConectarSuma);
 
         setVisible(true);
     }
@@ -120,7 +120,7 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
             System.out.println("Conectando...");
 
             conexion.getConexion(1);
-        } else if (evt.getSource() == btnConectarClemente) {
+        } else if (evt.getSource() == btnConectarSuma) {
             System.out.println("Conectando Clemente...");
             conexion.getConexion(2);
         }
@@ -152,7 +152,7 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
 
         Font robotoFont3 = Rutinas2.getFont("Roboto", true, 16, w, h, reduccion);
         btnConectar.setFont(robotoFont3);
-        btnConectarClemente.setFont(robotoFont3);
+        btnConectarSuma.setFont(robotoFont3);
 
         lightDarkMode.setBounds((int) (w * .4), (int) (h * .80), (int) (w * .55), (int) (h * .10));
     }

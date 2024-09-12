@@ -52,11 +52,11 @@ public class App extends JFrame {
         FlatAnimatedLafChange.hideSnapshotWithAnimation();
     }
 
-    public static void loginClemente(Connection conexion) {
-        MenuClemente menuClemente = new MenuClemente(conexion);
-        app.setContentPane(menuClemente);
-        menuClemente.applyComponentOrientation(app.getComponentOrientation());
-        SwingUtilities.updateComponentTreeUI(menuClemente);
+    public static void loginSuma(Connection conexion) {
+        MenuSuma menuSuma = new MenuSuma(conexion);
+        app.setContentPane(menuSuma);
+        menuSuma.applyComponentOrientation(app.getComponentOrientation());
+        SwingUtilities.updateComponentTreeUI(menuSuma);
     }
 
     public static void logout() {

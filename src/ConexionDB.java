@@ -41,7 +41,7 @@ public class ConexionDB {
                 if (type == 1) {
                     App.login(conexion);
                 } else {
-                    App.loginClemente(conexion);
+                    App.loginSuma(conexion);
                 }
             }
         } catch (SQLException e) {
