@@ -1,9 +1,12 @@
+package crud;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import conexion.ConexionDB;
+import menu_suma_pd.MenuSuma;
 import mode.LightDarkMode;
 
 import java.awt.Component;
@@ -14,13 +17,15 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.*;
 
+import main.App;
+
 import mode.Rutinas2;
 
 public class ComponenteHeader extends JPanel implements ComponentListener, ActionListener {
     public static final int MODO_CAPTURA = 0;
     public static final int MODO_CONSULTA = 1;
 
-    public static menu menu;
+    public static Menu menu;
 
     private JPanel pnlBtn;
     private JLabel lblModo;
@@ -30,7 +35,7 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
 
     private LightDarkMode lightDarkMode;
 
-    public ComponenteHeader(menu menu) {
+    public ComponenteHeader(Menu menu) {
         ComponenteHeader.menu = menu;
         init();
         addComponentListener(this);

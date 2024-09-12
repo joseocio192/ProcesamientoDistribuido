@@ -1,3 +1,4 @@
+package menu_suma_pd;
 
 import java.sql.*;
 
@@ -16,6 +17,10 @@ import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import conexion.ConexionDB;
+import conexion.ErrorHandler;
+import crud.ComponenteHeader;
+import crud.Content;
 import mode.Rutinas2;
 import raven.toast.Notifications;
 
@@ -48,12 +53,12 @@ public class MenuSuma extends JPanel implements ComponentListener, ActionListene
 
     private ComponenteHeader componenteHeader;
 
-    public MenuSuma(Connection conexion) {
+    public MenuSuma() {
         init();
-        HazEscuchas();
+        listeners();
     }
 
-    private void HazEscuchas() {
+    private void listeners() {
         addComponentListener(this);
         tableDropdown.addItemListener(this);
         tableDropdown.addActionListener(this);
@@ -409,12 +414,9 @@ public class MenuSuma extends JPanel implements ComponentListener, ActionListene
 
     @Override
     public void itemStateChanged(ItemEvent evt) {
-        if (evt.getSource() == tableDropdown) {
-            if (!selected) {
-                tableDropdown.removeItem("Seleccione");
-                selected = true;
-                return;
-            }
+        if (evt.getSource() == tableDropdown && !selected) {
+            tableDropdown.removeItem("Seleccione");
+            selected = true;
         }
     }
 

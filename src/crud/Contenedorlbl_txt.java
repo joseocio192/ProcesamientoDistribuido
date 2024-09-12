@@ -1,7 +1,8 @@
+package crud;
 
 import java.awt.*;
 
-class Contenedorlbl_txt implements LayoutManager {
+public class Contenedorlbl_txt implements LayoutManager {
 
     @Override
     public void addLayoutComponent(String name, Component comp) {

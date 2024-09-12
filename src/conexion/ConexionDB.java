@@ -1,6 +1,8 @@
+package conexion;
 
 import java.sql.*;
 
+import main.App;
 import raven.toast.Notifications;
 
 public class ConexionDB {
@@ -9,9 +11,7 @@ public class ConexionDB {
     private String basededatos;
     private String usuario;
     private String password;
-
-    static Connection conexion;
-    static String conexionUrl;
+    public static Connection conexion;
 
     public ConexionDB(String servidor, String basededatos, String usuario, String password) {
         this.servidor = servidor;
@@ -21,8 +21,7 @@ public class ConexionDB {
     }
 
     public void getConexion(int type) {
-
-        conexionUrl = "jdbc:sqlserver://" + servidor + ";"
+        String conexionUrl = "jdbc:sqlserver://" + servidor + ";"
                 + "database=" + basededatos + ";"
                 + "user=" + usuario + ";"
                 + "password=" + password + ";"
@@ -39,9 +38,9 @@ public class ConexionDB {
             if (conexion != null) {
                 System.out.println("Conectado a la base de datos");
                 if (type == 1) {
-                    App.login(conexion);
+                    App.login();
                 } else {
-                    App.loginSuma(conexion);
+                    App.loginSuma();
                 }
             }
         } catch (SQLException e) {
@@ -49,7 +48,5 @@ public class ConexionDB {
                     "Error al conectar a la base de datos");
             System.err.println(e.getMessage());
         }
-
     }
-
 }

@@ -1,3 +1,4 @@
+package crud;
 
 import java.sql.*;
 
@@ -18,10 +19,12 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 
+import conexion.ConexionDB;
+import conexion.ErrorHandler;
 import mode.Rutinas2;
 import raven.toast.Notifications;
 
-public class menu extends JPanel implements ComponentListener, ActionListener, ItemListener, FocusListener {
+public class Menu extends JPanel implements ComponentListener, ActionListener, ItemListener, FocusListener {
 
     private JPanel panel;
     private JPanel panelContent;
@@ -44,21 +47,19 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
 
     private ButtonGroup grupo;
 
-    private JTable table;
     private JScrollPane scroll;
     private DefaultTableModel modelo;
 
     private boolean selected = false;
-    private boolean band = false;
 
     private ComponenteHeader componenteHeader;
 
-    public menu(Connection conexion) {
+    public Menu() {
         init();
-        HazEscuchas();
+        listeners();
     }
 
-    private void HazEscuchas() {
+    private void listeners() {
         addComponentListener(this);
         cmbTablas.addItemListener(this);
         cmbTablas.addActionListener(this);
@@ -131,7 +132,7 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
                 + "border:10,20,30,10");
 
         modelo = new DefaultTableModel();
-        table = new JTable(modelo);
+        JTable table = new JTable(modelo);
         table.setDefaultEditor(Object.class, null);
 
         scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -372,7 +373,6 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
 
         if (modo == ComponenteHeader.MODO_CAPTURA) {
             // Set properties for capture mode
-            band = false;
             rdModificar.setVisible(true);
             rdNuevo.setVisible(true);
             btnLimpiar.setVisible(true);
@@ -380,7 +380,6 @@ public class menu extends JPanel implements ComponentListener, ActionListener, I
             btnBuscar.setVisible(false);
             btnEliminar.setVisible(false);
         } else if (modo == ComponenteHeader.MODO_CONSULTA) {
-            band = true;
             // Set properties for consultation mode
             rdModificar.setVisible(false);
             rdNuevo.setVisible(false);

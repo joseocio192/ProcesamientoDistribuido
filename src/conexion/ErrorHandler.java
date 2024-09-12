@@ -1,9 +1,13 @@
+package conexion;
 
 import java.sql.SQLException;
 
 import raven.toast.Notifications;
 
 public class ErrorHandler {
+
+    private ErrorHandler() {
+    }
 
     public static void handleSqlException(SQLException e) {
         // Examinar el código de error SQL
@@ -56,7 +60,6 @@ public class ErrorHandler {
     }
 
     public static void showNotification(String message) {
-        System.out.println("Notificacion: " + message);
         Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, message);
     }
 }
