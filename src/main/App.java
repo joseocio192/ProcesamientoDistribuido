@@ -3,8 +3,6 @@ package main;
 import java.util.logging.Logger;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.sql.Connection;
-
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -12,9 +10,15 @@ import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
-import crud.Menu;
-import menu_suma_pd.MenuSuma;
 import login.Vista;
+import login.ControladorLogin;
+import menu_suma_pd.ControladorSuma;
+import menu_suma_pd.MenuSuma;
+import menu_suma_pd.ModeloSuma;
+import crud.MenuCrudVista;
+import crud.ModeloBD;
+import crud.ModeloTabla;
+import crud.ControladorCrud;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -31,7 +35,6 @@ public class App extends JFrame {
         super("App");
         app = this;
         interfaz();
-        new Vista(app);
         setContentPane(panel);
         setVisible(true);
 
@@ -44,13 +47,18 @@ public class App extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
 
-        panel = new Vista(app);
+        Vista vista = new Vista(app);
+        panel = vista;
+        new ControladorLogin(vista);
 
         add(panel);
     }
 
     public static void login() {
-        Menu menu = new Menu();
+        MenuCrudVista menu = new MenuCrudVista();
+        ModeloTabla modelo = new ModeloTabla();
+        ModeloBD modeloBD = new ModeloBD();
+        new ControladorCrud(menu, modelo, modeloBD);
         app.setContentPane(menu);
         menu.applyComponentOrientation(app.getComponentOrientation());
         SwingUtilities.updateComponentTreeUI(menu);
@@ -59,6 +67,8 @@ public class App extends JFrame {
 
     public static void loginSuma() {
         MenuSuma menuSuma = new MenuSuma();
+        ModeloSuma modeloSuma = new ModeloSuma();
+        new ControladorSuma(menuSuma, modeloSuma);
         app.setContentPane(menuSuma);
         menuSuma.applyComponentOrientation(app.getComponentOrientation());
         SwingUtilities.updateComponentTreeUI(menuSuma);
@@ -66,6 +76,7 @@ public class App extends JFrame {
 
     public static void logout() {
         Vista vista = new Vista(app);
+        new ControladorLogin(vista);
 
         FlatAnimatedLafChange.showSnapshot();
         app.setContentPane(vista);

@@ -1,11 +1,11 @@
-package crud;
+package layouts;
 
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 
-public class Content implements LayoutManager {
+public class ContentLayout implements LayoutManager {
 
     @Override
     public void addLayoutComponent(String name, Component comp) {

@@ -1,10 +1,13 @@
 package conexion;
 
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 import raven.toast.Notifications;
 
 public class ErrorHandler {
+
+    static Logger logger = Logger.getLogger(ErrorHandler.class.getName());;
 
     private ErrorHandler() {
     }
@@ -13,14 +16,14 @@ public class ErrorHandler {
         // Examinar el código de error SQL
         int errorCode = e.getErrorCode();
 
-        // Personalizar mensajes de error según el código de error SQL
+        logger.severe(errorCode + " - " + e.getMessage());
         switch (errorCode) {
             case 201:
                 showNotification("Error: 201. Violación de restricción de clave foránea. TipID");
                 break;
             case 547:
                 // Check constraint violation
-                showNotification("Error: 547. Violacion de restriccion SQL.");
+                showNotification("Error: 547. Violacion de restriccion(PK/FK) SQL.");
                 break;
             case 8115:
                 // El campo exede el limite de caracteres numerico
@@ -47,6 +50,9 @@ public class ErrorHandler {
             case 168:
                 showNotification("Error: 168. El campo exede el limite de almacenamiento caracteres numerico");
                 break;
+            case 515:
+                showNotification("Error: 515. " + e.getLocalizedMessage());
+                break;
             default:
                 // Otro error SQL no manejado específicamente
                 handleGenericSqlError(e);
@@ -55,7 +61,8 @@ public class ErrorHandler {
     }
 
     private static void handleGenericSqlError(SQLException e) {
-        String errorMessage = "Error SQL no manejado específicamente: " + e.getMessage();
+        String errorMessage = "Error SQL no manejado específicamente: " + e.getLocalizedMessage();
+        logger.severe(e.getErrorCode() + " - " + e.getLocalizedMessage());
         showNotification(errorMessage);
     }
 

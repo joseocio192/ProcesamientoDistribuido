@@ -4,19 +4,21 @@ import javax.swing.*;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import layouts.Contenedorlbl_txtLayout;
 import mode.LightDarkMode;
 import raven.toast.Notifications;
 import mode.Rutinas2;
-import conexion.ConexionDB;
-import crud.Contenedorlbl_txt;
 import main.App;
 
 import java.awt.event.*;
 import java.awt.*;
 
-public class Vista extends JPanel implements ActionListener, ComponentListener {
+import java.util.logging.Logger;
+
+public class Vista extends JPanel implements ComponentListener {
 
     private static App app;
+    transient Logger logger = Logger.getLogger(Vista.class.getName());
 
     private JButton btnConectar;
     private JButton btnConectarSuma;
@@ -25,13 +27,13 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
     private JLabel lblServidor;
     private JLabel lblBasedeDatos;
     private JLabel lblUsuario;
-    private JLabel lblContraseña;
+    private JLabel lblPassword;
 
     private JTextField txtServidor;
     private JTextField txtBasedeDatos;
     private JTextField txtUsuario;
 
-    private JPasswordField txtContraseña;
+    private JPasswordField txtPassword;
 
     private JPanel panel;
 
@@ -39,20 +41,14 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
 
     public Vista(App app) {
         Vista.app = app;
-        HazInterfaz();
+        createInterface();
         setMinimumSize(new Dimension(350, 350));
 
-        HazEscuchas();
+        addComponentListener(this);
         Notifications.getInstance().setJFrame(Vista.app);
     }
 
-    private void HazEscuchas() {
-        addComponentListener(this);
-        btnConectar.addActionListener(this);
-        btnConectarSuma.addActionListener(this);
-    }
-
-    private void HazInterfaz() {
+    private void createInterface() {
         setLayout(null);
 
         // Boton de modo claro/oscuro
@@ -61,7 +57,7 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
 
         panel = new JPanel();
 
-        panel.setLayout(new Contenedorlbl_txt());
+        panel.setLayout(new Contenedorlbl_txtLayout());
         panel.putClientProperty(FlatClientProperties.STYLE, ""
                 + "border:20,2,2,2;"
                 + "background:$Menu.background;"
@@ -89,11 +85,11 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
         txtUsuario = new JTextField("sa");
         panel.add(txtUsuario);
 
-        lblContraseña = new JLabel("Contraseña");
-        panel.add(lblContraseña);
+        lblPassword = new JLabel("Contraseña");
+        panel.add(lblPassword);
 
-        txtContraseña = new JPasswordField("123456789");
-        panel.add(txtContraseña);
+        txtPassword = new JPasswordField("123456789");
+        panel.add(txtPassword);
 
         btnConectar = new JButton("Conectar");
         panel.add(btnConectar);
@@ -104,58 +100,56 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
         setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        String servidor = txtServidor.getText();
-        String basededatos = txtBasedeDatos.getText();
-        String usuario = txtUsuario.getText();
-        char[] passwordChars = txtContraseña.getPassword();
-        String contraseña = new String(passwordChars);
+    public JButton getBtnConectar() {
+        return btnConectar;
+    }
 
-        if (servidor.equals("") || basededatos.equals("") || usuario.equals("") ||
-                contraseña.equals("")) {
-            System.out.println("Faltan datos de conexión");
-            Notifications.getInstance().show(Notifications.Type.INFO,
-                    Notifications.Location.TOP_CENTER,
-                    "Escribir los datos de conexión");
-            return;
-        }
-        ConexionDB conexion = new ConexionDB(servidor, basededatos, usuario, contraseña);
-        if (evt.getSource() == btnConectar) {
-            System.out.println("Conectando...");
+    public JButton getBtnConectarSuma() {
+        return btnConectarSuma;
+    }
 
-            conexion.getConexion(1);
-        } else if (evt.getSource() == btnConectarSuma) {
-            System.out.println("Conectando Clemente...");
-            conexion.getConexion(2);
-        }
+    public JTextField getTxtServidor() {
+        return txtServidor;
+    }
+
+    public JTextField getTxtBasedeDatos() {
+        return txtBasedeDatos;
+    }
+
+    public JTextField getTxtUsuario() {
+        return txtUsuario;
+    }
+
+    public JPasswordField getTxtPassword() {
+        return txtPassword;
     }
 
     @Override
     public void componentResized(ComponentEvent e) {
         int w = this.getWidth();
         int h = this.getHeight();
+        String font = "Roboto";
         float reduccion = 450;
         System.out.println("w: " + w + " h: " + h);
 
         panel.setBounds((int) (w * .1), (int) (h * .1), (int) (w * .8), (int) (h * .6));
 
-        Font robotoFont0 = Rutinas2.getFont("Roboto", true, 30, w, h, reduccion);
+        Font robotoFont0 = Rutinas2.getFont(font, true, 30, w, h, reduccion);
         lblLogin.setFont(robotoFont0);
 
-        Font robotoFont = Rutinas2.getFont("Roboto", true, 14, w, h, reduccion);
+        Font robotoFont = Rutinas2.getFont(font, true, 14, w, h, reduccion);
         lblServidor.setFont(robotoFont);
         lblBasedeDatos.setFont(robotoFont);
         lblUsuario.setFont(robotoFont);
-        lblContraseña.setFont(robotoFont);
+        lblPassword.setFont(robotoFont);
 
-        Font robotoFont2 = Rutinas2.getFont("Roboto", true, 14, w, h, reduccion);
+        Font robotoFont2 = Rutinas2.getFont(font, true, 14, w, h, reduccion);
         txtServidor.setFont(robotoFont2);
         txtBasedeDatos.setFont(robotoFont2);
         txtUsuario.setFont(robotoFont2);
-        txtContraseña.setFont(robotoFont2);
+        txtPassword.setFont(robotoFont2);
 
-        Font robotoFont3 = Rutinas2.getFont("Roboto", true, 16, w, h, reduccion);
+        Font robotoFont3 = Rutinas2.getFont(font, true, 16, w, h, reduccion);
         btnConectar.setFont(robotoFont3);
         btnConectarSuma.setFont(robotoFont3);
 
@@ -164,16 +158,19 @@ public class Vista extends JPanel implements ActionListener, ComponentListener {
 
     @Override
     public void componentMoved(ComponentEvent e) {
-
+        // This method is intentionally left empty because we do not need to handle
+        // component move events.
     }
 
     @Override
     public void componentShown(ComponentEvent e) {
-        System.out.println("Shown");
+        // This method is intentionally left empty because we do not need to handle
+        // component shown events.
     }
 
     @Override
     public void componentHidden(ComponentEvent e) {
-        System.out.println("Hidden");
+        // This method is intentionally left empty because we do not need to handle
+        // component hidden events.
     }
 }

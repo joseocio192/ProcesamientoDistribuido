@@ -12,6 +12,8 @@ import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,11 +22,11 @@ import com.formdev.flatlaf.FlatClientProperties;
 import conexion.ConexionDB;
 import conexion.ErrorHandler;
 import crud.ComponenteHeader;
-import crud.Content;
+import layouts.ContentLayout;
 import mode.Rutinas2;
 import raven.toast.Notifications;
 
-public class MenuSuma extends JPanel implements ComponentListener, ActionListener, ItemListener, FocusListener {
+public class MenuSuma extends JPanel implements ComponentListener, ItemListener {
     static final String TICKETSD = "TICKETSD";
     static final String TICKETSH = "TICKETSH";
 
@@ -61,18 +63,12 @@ public class MenuSuma extends JPanel implements ComponentListener, ActionListene
     private void listeners() {
         addComponentListener(this);
         tableDropdown.addItemListener(this);
-        tableDropdown.addActionListener(this);
-        btnPrecioMasUno.addActionListener(this);
-        btnLimpiar.addActionListener(this);
-        rdEstado.addActionListener(this);
-        rdCiudad.addActionListener(this);
-        rdTienda.addActionListener(this);
     }
 
     public void init() {
         setLayout(null);
 
-        componenteHeader = new ComponenteHeader(this);
+        componenteHeader = new ComponenteHeader();
         add(componenteHeader, BorderLayout.NORTH);
 
         // PANEL--------------------------------------------------------
@@ -83,8 +79,7 @@ public class MenuSuma extends JPanel implements ComponentListener, ActionListene
                 + "background:$Menu.background;"
                 + "border:10,20,30,10");
 
-        tableDropdown = new JComboBox<String>(new String[] { "Seleccione" });
-        llenarCombo();
+        tableDropdown = new JComboBox<>();
         panel.add(tableDropdown);
 
         rdEstado = new JRadioButton("Estado");
@@ -116,7 +111,7 @@ public class MenuSuma extends JPanel implements ComponentListener, ActionListene
         // FIN.PANEL-------------------------------------------------------
 
         panelContent = new JPanel();
-        panelContent.setLayout(new Content());
+        panelContent.setLayout(new ContentLayout());
         panelContent.putClientProperty(FlatClientProperties.STYLE, ""
                 + "background:$Menu.background;"
                 + "border:10,20,30,10");
@@ -124,7 +119,7 @@ public class MenuSuma extends JPanel implements ComponentListener, ActionListene
 
         lblAtributoFiltro = new JLabel();
         panelContent.add(lblAtributoFiltro);
-        priceDropdown = new JComboBox<String>(new String[] { "Seleccione" });
+        priceDropdown = new JComboBox<>();
         panelContent.add(priceDropdown);
         priceDropdown.setVisible(false);
 
@@ -138,117 +133,14 @@ public class MenuSuma extends JPanel implements ComponentListener, ActionListene
         table = new JTable(modelo);
         table.setDefaultEditor(Object.class, null);
 
-        scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         pnlTabla.add(scroll, BorderLayout.CENTER);
 
         pnlTabla.add(scroll, BorderLayout.CENTER);
         pnlTabla.setLayout(null);
         add(pnlTabla);
         // PNLTABLA-------------------------------------------------------
-
-        setVisible(true);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == tableDropdown) {
-            rdEstado.setEnabled(true);
-            rdCiudad.setEnabled(true);
-            rdTienda.setEnabled(true);
-            // if (!band) {
-            // if (rdNuevo.isSelected()) {
-            // txtTipid.setText("*");
-            // txtTipid.setEditable(false);
-            // txtClienteId.setText("*");
-            // txtClienteId.setEditable(false);
-            // }
-            // if (rdModificar.isSelected()) {
-            // txtTipid.setText("");
-            // txtTipid.setEditable(true);
-            // txtClienteId.setText("");
-            // txtClienteId.setEditable(true);
-            // }
-            // }
-
-        }
-        if (evt.getSource() == btnLimpiar) {
-            limpiar();
-            return;
-        }
-
-        if (evt.getSource() == btnPrecioMasUno) {
-            String atributo = "";
-            if (rdEstado.isSelected()) {
-                atributo = rdEstado.getText();
-            }
-            if (rdCiudad.isSelected()) {
-                atributo = rdCiudad.getText();
-            }
-            if (rdTienda.isSelected()) {
-                atributo = rdTienda.getText();
-            }
-
-            int dialogResult = JOptionPane.showConfirmDialog(this,
-                    "¿Está seguro de sumar uno al precio de la tabla: " + tableDropdown.getSelectedItem().toString()
-                            + ",  Atributo: " + atributo + ", Valor: " + priceDropdown.getSelectedItem().toString()
-                            + "?",
-                    "Confirmar", JOptionPane.YES_NO_OPTION);
-            if (dialogResult != JOptionPane.YES_OPTION) {
-                return;
-            }
-
-            for (int i = 0; i < 200; i++) {
-                try {
-                    // if (sumarUnoPrecio() == 0) {
-                    // ErrorHandler.showNotification("No se pudo sumar uno al precio");
-                    // break;
-                    // } else {
-                    // ErrorHandler.showNotification("Se sumó uno al precio");
-                    // }
-                    sumarUnoPrecio();
-                } catch (Exception e) {
-                    ErrorHandler.showNotification("Error: " + e.getMessage());
-                }
-            }
-        }
-        if (evt.getSource() == rdEstado) {
-            btnPrecioMasUno.setEnabled(true);
-            lblAtributoFiltro.setText("IDESTADO");
-            llenarComboFK("IDESTADO");
-            priceDropdown.setVisible(true);
-        }
-        if (evt.getSource() == rdCiudad) {
-            btnPrecioMasUno.setEnabled(true);
-            lblAtributoFiltro.setText("IDCIUDAD");
-            llenarComboFK("IDCIUDAD");
-            priceDropdown.setVisible(true);
-        }
-        if (evt.getSource() == rdTienda) {
-            btnPrecioMasUno.setEnabled(true);
-            lblAtributoFiltro.setText("IDTIENDA");
-            llenarComboFK("IDTIENDA");
-            priceDropdown.setVisible(true);
-        }
-
-        try (Statement s = ConexionDB.conexion.createStatement()) {
-            ResultSet rs = s
-                    .executeQuery(
-                            "SELECT top 1 TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'"
-                                    + tableDropdown.getSelectedItem().toString()
-                                    + "' ");
-            rs.next();
-
-            llenarTabla(rs.getString(1));
-
-        } catch (Exception e) {
-            ErrorHandler.showNotification("Error: " + e.getMessage());
-        }
-    }
-
-    // limpieza de los campos
-    private void limpiar() {
-
     }
 
     private int sumarUnoPrecio() throws SQLException, InterruptedException {
@@ -283,68 +175,59 @@ public class MenuSuma extends JPanel implements ComponentListener, ActionListene
         return rowsAffected;
     }
 
-    private void llenarTabla(String Tabla) {
-        try {
-            modelo.setColumnCount(0);
-            modelo.setRowCount(0);
+    public void setColumnNames(List<String> columnNames) {
+        modelo.setColumnCount(0);
+        modelo.setRowCount(0);
 
-            Statement s = ConexionDB.conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs1 = s
-                    .executeQuery(
-                            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'" + Tabla
-                                    + "' ");
-            while (rs1.next()) {
-                modelo.addColumn(rs1.getString("COLUMN_NAME"));
-            }
-
-            ResultSet rs2 = s.executeQuery("SELECT top 1000 * FROM " + Tabla);
-
-            while (rs2.next()) {
-                Object[] fila = new Object[modelo.getColumnCount()];
-                for (int i = 0; i < modelo.getColumnCount(); i++) {
-                    fila[i] = rs2.getObject(i + 1);
-                }
-                modelo.addRow(fila);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+        for (String columnName : columnNames) {
+            modelo.addColumn(columnName);
         }
     }
 
-    private void llenarCombo() {
-        try {
-            Statement s = ConexionDB.conexion.createStatement();
-            ResultSet rs = s
-                    .executeQuery("select TABLE_NAME from INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'"
-                            + TICKETSD + "' ");
-            while (rs.next()) {
-                tableDropdown.addItem(rs.getString("TABLE_NAME"));
-            }
-            tableDropdown.setSelectedIndex(0);
-        } catch (Exception e) {
-            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER,
-                    "Error, " + e.getMessage());
-            System.out.println("Error: " + e.getMessage());
-        }
+    public void addRowToTable(Object[] row) {
+        modelo.addRow(row);
     }
 
-    private void llenarComboFK(String filtro) {
-        try {
-            priceDropdown.removeAllItems();
-            priceDropdown.addItem("Seleccione");
-            Statement s = ConexionDB.conexion.createStatement();
-            ResultSet rs = s
-                    .executeQuery(
-                            "SELECT distinct(" + filtro + ") FROM " + tableDropdown.getSelectedItem().toString() + " D "
-                                    + " inner join " + TICKETSH + " H on " + "D.TICKET = H.TICKET order by " + filtro);
-            while (rs.next()) {
-                priceDropdown.addItem(rs.getString(filtro));
-            }
-            priceDropdown.setSelectedIndex(0);
-        } catch (Exception e) {
-            ErrorHandler.showNotification("Error: " + e.getMessage());
+    public void llenarCombo(List<String> tablas, JComboBox<String> combo) {
+        combo.removeAllItems();
+        combo.addItem("Seleccione");
+        for (String t : tablas) {
+            combo.addItem(t);
         }
+        combo.setSelectedIndex(0);
+    }
+
+    // Getters
+    public JComboBox<String> getTableDropdown() {
+        return tableDropdown;
+    }
+
+    public JComboBox<String> getPriceDropdown() {
+        return priceDropdown;
+    }
+
+    public JRadioButton getRdEstado() {
+        return rdEstado;
+    }
+
+    public JRadioButton getRdCiudad() {
+        return rdCiudad;
+    }
+
+    public JRadioButton getRdTienda() {
+        return rdTienda;
+    }
+
+    public JButton getBtnLimpiar() {
+        return btnLimpiar;
+    }
+
+    public JButton getBtnPrecioMasUno() {
+        return btnPrecioMasUno;
+    }
+
+    public JLabel getLblAtributoFiltro() {
+        return lblAtributoFiltro;
     }
 
     @Override
@@ -402,32 +285,24 @@ public class MenuSuma extends JPanel implements ComponentListener, ActionListene
 
     @Override
     public void componentMoved(ComponentEvent e) {
+        // This method is not used
     }
 
     @Override
     public void componentShown(ComponentEvent e) {
+        // This method is not used
     }
 
     @Override
     public void componentHidden(ComponentEvent e) {
+        // This method is not used
     }
 
     @Override
     public void itemStateChanged(ItemEvent evt) {
-        if (evt.getSource() == tableDropdown && !selected) {
-            tableDropdown.removeItem("Seleccione");
-            selected = true;
-        }
+        // if (evt.getSource() == tableDropdown && !selected) {
+        // tableDropdown.removeItem("Seleccione");
+        // selected = true;
+        // }
     }
-
-    @Override
-    public void focusGained(FocusEvent e) {
-
-    }
-
-    @Override
-    public void focusLost(FocusEvent e) {
-
-    }
-
 }
