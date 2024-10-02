@@ -22,6 +22,7 @@ public class ControladorLogin implements ActionListener {
     public void listeners() {
         vista.getBtnConectar().addActionListener(this);
         vista.getBtnConectarSuma().addActionListener(this);
+        vista.getBtnConectarBulkCleaning().addActionListener(this);
     }
 
     @Override
@@ -47,6 +48,9 @@ public class ControladorLogin implements ActionListener {
         } else if (evt.getSource() == vista.getBtnConectarSuma()) {
             logger.info("Conectando Vista Suma...");
             conexion.getConexion(2);
+        } else if (evt.getSource() == vista.getBtnConectarBulkCleaning()) {
+            logger.info("Conectando Vista Bulk Cleaning...");
+            conexion.getConexion(3);
         }
     }
 }

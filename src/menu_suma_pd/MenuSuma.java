@@ -68,7 +68,7 @@ public class MenuSuma extends JPanel implements ComponentListener, ItemListener 
     public void init() {
         setLayout(null);
 
-        componenteHeader = new ComponenteHeader();
+        componenteHeader = new ComponenteHeader("Suma");
         add(componenteHeader, BorderLayout.NORTH);
 
         // PANEL--------------------------------------------------------

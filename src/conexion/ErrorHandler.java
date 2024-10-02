@@ -18,6 +18,9 @@ public class ErrorHandler {
 
         logger.severe(errorCode + " - " + e.getMessage());
         switch (errorCode) {
+            case 245:
+                showNotification("Error: 245. Error de conversión de datos.");
+                break;
             case 201:
                 showNotification("Error: 201. Violación de restricción de clave foránea. TipID");
                 break;

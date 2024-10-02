@@ -22,6 +22,7 @@ public class Vista extends JPanel implements ComponentListener {
 
     private JButton btnConectar;
     private JButton btnConectarSuma;
+    private JButton btnConectarBulkCleaning;
 
     private JLabel lblLogin;
     private JLabel lblServidor;
@@ -97,6 +98,9 @@ public class Vista extends JPanel implements ComponentListener {
         btnConectarSuma = new JButton("Suma");
         panel.add(btnConectarSuma);
 
+        btnConectarBulkCleaning = new JButton("Bulk and Cleaning");
+        add(btnConectarBulkCleaning);
+
         setVisible(true);
     }
 
@@ -106,6 +110,10 @@ public class Vista extends JPanel implements ComponentListener {
 
     public JButton getBtnConectarSuma() {
         return btnConectarSuma;
+    }
+
+    public JButton getBtnConectarBulkCleaning() {
+        return btnConectarBulkCleaning;
     }
 
     public JTextField getTxtServidor() {
@@ -126,13 +134,16 @@ public class Vista extends JPanel implements ComponentListener {
 
     @Override
     public void componentResized(ComponentEvent e) {
-        int w = this.getWidth();
-        int h = this.getHeight();
+        short w = (short) getWidth();
+        short h = (short) getHeight();
         String font = "Roboto";
         float reduccion = 450;
         System.out.println("w: " + w + " h: " + h);
 
-        panel.setBounds((int) (w * .1), (int) (h * .1), (int) (w * .8), (int) (h * .6));
+        panel.setBounds((short) (w * .1), (short) (h * .1), (short) (w * .8), (short) (h * .6));
+
+        btnConectarBulkCleaning.setBounds(panel.getX(), panel.getHeight() + (short) (panel.getY() * 1.1),
+                panel.getWidth(), (short) (panel.getHeight() * .1));
 
         Font robotoFont0 = Rutinas2.getFont(font, true, 30, w, h, reduccion);
         lblLogin.setFont(robotoFont0);
@@ -152,8 +163,10 @@ public class Vista extends JPanel implements ComponentListener {
         Font robotoFont3 = Rutinas2.getFont(font, true, 16, w, h, reduccion);
         btnConectar.setFont(robotoFont3);
         btnConectarSuma.setFont(robotoFont3);
+        btnConectarBulkCleaning.setFont(robotoFont3);
 
-        lightDarkMode.setBounds((int) (w * .4), (int) (h * .80), (int) (w * .55), (int) (h * .10));
+        lightDarkMode.setBounds((short) (w * .5), btnConectarBulkCleaning.getY() + btnConectarBulkCleaning.getHeight(),
+                (short) (w * .37), (short) (h * .10));
     }
 
     @Override

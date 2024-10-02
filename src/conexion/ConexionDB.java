@@ -39,8 +39,10 @@ public class ConexionDB {
                 System.out.println("Conectado a la base de datos");
                 if (type == 1) {
                     App.login();
-                } else {
+                } else if (type == 2) {
                     App.loginSuma();
+                } else {
+                    App.loginInsertarBulk();
                 }
             }
         } catch (SQLException e) {

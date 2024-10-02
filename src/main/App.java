@@ -10,6 +10,11 @@ import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
+import bulk_cleaning.ControladorBulkCleaning;
+import bulk_cleaning.DataCleaning;
+import bulk_cleaning.ModeloBulkClean;
+import bulk_cleaning.VistaCleaning;
+import conexion.ConexionDB;
 import login.Vista;
 import login.ControladorLogin;
 import menu_suma_pd.ControladorSuma;
@@ -72,6 +77,16 @@ public class App extends JFrame {
         app.setContentPane(menuSuma);
         menuSuma.applyComponentOrientation(app.getComponentOrientation());
         SwingUtilities.updateComponentTreeUI(menuSuma);
+    }
+
+    public static void loginInsertarBulk() {
+        VistaCleaning vistaCleaning = new VistaCleaning();
+        ModeloBulkClean modeloBulkClean = new ModeloBulkClean(ConexionDB.conexion);
+        new ControladorBulkCleaning(vistaCleaning, modeloBulkClean);
+        app.setContentPane(vistaCleaning);
+        vistaCleaning.applyComponentOrientation(app.getComponentOrientation());
+        SwingUtilities.updateComponentTreeUI(vistaCleaning);
+        FlatAnimatedLafChange.hideSnapshotWithAnimation();
     }
 
     public static void logout() {

@@ -33,10 +33,13 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
     private JButton btnModoConsulta;
     private JButton logout;
 
+    String modo;
+
     private LightDarkMode lightDarkMode;
 
     public ComponenteHeader(MenuCrudVista menu) {
         ComponenteHeader.menu = menu;
+        modo = "Elegir modo";
         init();
         addComponentListener(this);
         btnModoCaptura.addActionListener(this);
@@ -44,7 +47,8 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
         logout.addActionListener(this);
     }
 
-    public ComponenteHeader() {
+    public ComponenteHeader(String modo) {
+        this.modo = modo;
         initSumaHeader();
         addComponentListener(this);
         logout.addActionListener(this);
@@ -65,7 +69,7 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
                 + "innerFocusWidth:0");
         add(logout);
 
-        lblModo = new JLabel("Modo");
+        lblModo = new JLabel(modo);
         add(lblModo);
 
         // -----------------------------------------------------------
@@ -108,7 +112,7 @@ public class ComponenteHeader extends JPanel implements ComponentListener, Actio
                 + "innerFocusWidth:0");
         add(logout);
 
-        lblModo = new JLabel("Modo");
+        lblModo = new JLabel(modo);
         add(lblModo);
         // -----------------------------------------------------------
     }
